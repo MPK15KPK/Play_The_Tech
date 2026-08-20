@@ -1,8 +1,13 @@
 name: deploy
 
+# Manual only. Pushing to main does not deploy — someone has to start this
+# run deliberately from the Actions tab. Deploying to production is a decision,
+# not a side effect of committing.
+#
+# To go back to deploying on every push to main, restore:
+#   push:
+#     branches: [main]
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 concurrency:

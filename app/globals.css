@@ -1,0 +1,1484 @@
+/* ==========================================================================
+   playthetech — one design system, written once.
+
+   Layout is the trade catalogue it was: ruled index rows, a dense spec table,
+   a sticky rail. Surface is modern product UI — Geist, a cool neutral scale,
+   and small elevation instead of hard industrial rules.
+
+   There is no accent colour. Actions are near-black, links are a deep slate,
+   and the only saturated colour anywhere is the amber on a winning cell and
+   its verification stamp. On a site whose entire product is a table, that
+   makes the data the only thing on the page wearing colour.
+   ========================================================================== */
+
+:root {
+  /* Slate — surfaces, bands, headings. */
+  --brand-900: #0B1220;
+  --brand-800: #18233A;
+  --brand-700: #2C3A55;
+  --brand-600: #2C4A6B;  /* links — deep slate, functional, never bright */
+  --brand-500: #94A3B8;  /* the mark on a dark ground */
+  --brand-100: #E7EBF1;
+
+  /* Actions, by the old name so every control follows it. Near-black, so a
+     button reads as a button by weight rather than by hue. */
+  --mark:      #16202E;
+  --mark-700:  #0B1220;
+  --mark-100:  #E9EDF2;
+  --mark-wash: #F7F9FC;
+
+  /* Amber — winning cells and the verification stamp. Nothing else. */
+  --win:       #B45309;
+  --win-100:   #FAE7C7;
+  --win-wash:  #FEF8EF;
+
+  /* Positive and negative. State only, never emphasis. */
+  --good:      #0E9F6E;
+  --good-100:  #DCF5EB;
+  --flag:      #DC2626;
+  --flag-100:  #FDE9E9;
+
+  /* Neutrals */
+  --paper:     #FFFFFF;
+  --surface:   #F7F9FC;
+  --ink:       #0F1B2D;
+  --ink-2:     #3D4C63;
+  --ink-muted: #6B7A90;
+  --rule:      #E4E9F1;
+  --rule-2:    #CBD4E1;
+
+  --link: var(--brand-600);
+
+  /* Type — Geist for the interface, Geist Mono for every figure. */
+  --font-display: var(--geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-body:    var(--geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-data:    var(--geist-mono), ui-monospace, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0:  1rem;
+  --step-1:  1.1875rem;
+  --step-2:  1.5rem;
+  --step-3:  1.9375rem;
+  --step-4:  2.625rem;
+
+  /* Deliberately not a uniform 8px multiple. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 18px;
+  --space-5: 26px;
+  --space-6: 40px;
+
+  --rule-hair:  1px;
+  --rule-mid:   2px;
+  --rule-heavy: 3px;
+
+  --radius:    8px;
+  --radius-sm: 6px;
+
+  /* Elevation is small and cool-toned. Anything bigger reads as a 2015 card. */
+  --shadow-sm: 0 1px 2px rgba(15, 27, 45, 0.06);
+  --shadow-md: 0 1px 3px rgba(15, 27, 45, 0.07), 0 10px 24px -12px rgba(15, 27, 45, 0.18);
+
+  --ease: cubic-bezier(0.2, 0, 0.1, 1);
+  --dur:  140ms;
+
+  --measure: 74ch;
+  --shell:   1280px;
+}
+
+/* --------------------------------------------------------------- reset */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+/* Column layout so a short page — a 404, an empty index — still puts the
+   footer on the bottom edge instead of leaving a band of white under it. */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+body > main { flex: 1 0 auto; }
+body > .site-header, body > .site-footer { flex: none; }
+
+img, svg { max-width: 100%; height: auto; display: block; }
+
+/* ----------------------------------------------------------- typography */
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.12;
+  margin: 0;
+  color: var(--brand-900);
+}
+
+h1 { font-size: var(--step-4); font-weight: 700; letter-spacing: -0.03em; }
+h2 { font-size: var(--step-3); letter-spacing: -0.025em; }
+h3 { font-size: var(--step-2); letter-spacing: -0.02em; }
+h4 { font-size: var(--step-1); letter-spacing: -0.015em; }
+
+p { margin: 0 0 var(--space-3); }
+
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: var(--radius-sm); }
+
+code, kbd, samp { font-family: var(--font-data); font-size: 0.9em; }
+hr { border: 0; border-top: var(--rule-hair) solid var(--rule); margin: var(--space-5) 0; }
+
+time { font-variant-numeric: tabular-nums; }
+
+.shell { max-width: var(--shell); margin: 0 auto; padding: 0 var(--space-5); }
+
+/* The small caption that names a block without spending a heading on it.
+   Tighter tracking and a smaller size than the industrial version — a label,
+   not an announcement. */
+.eyebrow,
+.featured-label, .aside-label, .toc-label, .answer-label,
+.actions-label, .traffic-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.section-head .count {
+  font-family: var(--font-data);
+  font-size: var(--step--1);
+  color: var(--ink-muted);
+}
+
+/* ================================================================ header */
+
+/* A masthead band. It gives the page a top edge, carries the wordmark at
+   full contrast, and is the one large area of colour on the site. */
+.site-header {
+  background: var(--brand-900);
+  border-bottom: var(--rule-hair) solid var(--brand-800);
+}
+.site-header .shell {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-3);
+}
+
+.masthead { display: flex; align-items: center; gap: var(--space-4); flex: 1 1 auto; min-width: 0; }
+.wordmark { color: #fff; flex: none; }
+.wordmark:hover { text-decoration: none; }
+
+.masthead-note {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.4;
+  color: var(--brand-500);
+  max-width: 54ch;
+  border-left: var(--rule-hair) solid var(--brand-700);
+  padding-left: var(--space-4);
+}
+
+.site-nav { display: flex; align-items: center; gap: var(--space-2); flex: none; }
+.site-nav a {
+  font-size: var(--step-0);
+  color: var(--brand-100);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+}
+.site-nav a:hover { color: #fff; background: var(--brand-800); text-decoration: none; }
+/* Inverted, because a near-black button on a near-black bar is not a button. */
+.site-nav a.cta {
+  color: var(--brand-900);
+  font-weight: 600;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+}
+.site-nav a.cta:hover { background: var(--brand-100); }
+
+/* ------------------------------------------------------------------ logo */
+
+.logo { display: inline-flex; align-items: center; gap: var(--space-3); }
+.logo-mark { display: block; flex: none; }
+.logo-word {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-2);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.logo-play, .logo-rest { color: inherit; }
+.logo-dot { color: var(--ink-muted); }
+.site-header .logo-dot { color: var(--brand-500); }
+
+/* The mark reads light-on-dark in the band, dark-on-light everywhere else. */
+
+/* ============================================== homepage: the catalogue */
+
+/* The cover block. Says what the catalogue is in one breath, then gets out of
+   the way — UI.md §5 asks the page to open with the list itself. */
+.index-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: var(--space-3) var(--space-6);
+  align-items: end;
+  padding: var(--space-5) 0 var(--space-4);
+}
+.index-head .eyebrow { grid-column: 1 / -1; }
+.index-head h1 { grid-column: 1; margin: 0; }
+.index-head .lead {
+  grid-column: 2;
+  margin: 0;
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--ink-2);
+  padding-left: var(--space-5);
+  border-left: var(--rule-mid) solid var(--brand-100);
+}
+
+/* What this catalogue currently holds — the run of figures at the head of a
+   price list, on its own tinted band. */
+.ledger {
+  display: flex;
+  flex-wrap: wrap;
+  margin: var(--space-4) 0 0;
+  background: var(--surface);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--radius);
+}
+.ledger-item {
+  flex: 1 1 11rem;
+  padding: var(--space-3) var(--space-4);
+  border-right: var(--rule-hair) solid var(--rule);
+}
+.ledger-item:last-child { border-right: 0; }
+.ledger-item:last-child { border-right: 0; }
+.ledger dt {
+  font-size: var(--step--1);
+  color: var(--ink-muted);
+  margin-bottom: 2px;
+}
+.ledger dd {
+  margin: 0;
+  font-family: var(--font-data);
+  font-size: var(--step-1);
+  font-variant-numeric: tabular-nums;
+  color: var(--brand-800);
+  font-weight: 500;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin: var(--space-6) 0 0;
+  padding-bottom: var(--space-3);
+  border-bottom: var(--rule-hair) solid var(--rule-2);
+}
+.section-head h2 { font-size: var(--step-2); }
+
+.empty {
+  margin: var(--space-5) 0;
+  padding: var(--space-4);
+  background: var(--surface);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--radius);
+  max-width: var(--measure);
+}
+
+/* ------------------------------------- the newest comparison, in full */
+
+/* Not a card floating in space — a ruled spread with the sample table on it,
+   the way a catalogue prints one page to show what the rest look like. */
+/* Explicit rows, with a spare 1fr row at the foot. Without it the table —
+   which spans the whole block — pushes its extra height into the gaps
+   between the heading, the summary and the button on the left. */
+.featured {
+  display: grid;
+  grid-template-columns: minmax(0, 25rem) minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto auto 1fr;
+  gap: 0 var(--space-6);
+  align-items: start;
+  padding: var(--space-5) 0;
+}
+.featured-label { grid-column: 1; grid-row: 1; margin: 0 0 var(--space-2); }
+.featured h2 { grid-column: 1; grid-row: 2; font-size: var(--step-3); margin: 0 0 var(--space-3); }
+.featured h2 a { color: var(--brand-900); }
+.featured h2 a:hover { color: var(--brand-600); text-decoration: none; }
+
+.featured-meta {
+  grid-column: 1;
+  grid-row: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-data);
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-muted);
+}
+
+.featured-summary {
+  grid-column: 1;
+  grid-row: 4;
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin: 0 0 var(--space-4);
+}
+
+/* The table takes the right half and the full height of the block. */
+.featured-table { grid-column: 2; grid-row: 1 / -1; margin: 0; }
+
+.featured-more { grid-column: 1; grid-row: 5; margin: 0; }
+.featured-more a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: var(--space-2) var(--space-4);
+  background: var(--mark);
+  color: #fff;
+  font-weight: 600;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: background var(--dur) var(--ease);
+}
+.featured-more a:hover { background: var(--mark-700); text-decoration: none; }
+
+/* --------------------------------------- the index of every comparison */
+
+/* Was a grid of drop-shadowed cards of unequal height, which is the most
+   template-looking thing a page can do. A catalogue lists its contents in
+   rows — and rows are also how a reader compares six of them at once. */
+.card-grid { list-style: none; margin: 0; padding: 0; }
+
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 10rem minmax(0, 1fr);
+  gap: 0 var(--space-5);
+  align-items: baseline;
+  padding: var(--space-4) var(--space-3);
+  border-bottom: var(--rule-hair) solid var(--rule);
+  transition: background var(--dur) var(--ease);
+}
+.card { border-radius: var(--radius); }
+.card:hover { background: var(--surface); }
+.card:focus-within { outline: 2px solid var(--mark); outline-offset: -2px; }
+
+.card-top { grid-column: 1; grid-row: 1 / span 3; }
+
+/* A tinted pill, coloured by kind. */
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  padding: 2px var(--space-2);
+  border-radius: 999px;
+  background: var(--brand-100);
+  color: var(--mark-700);
+}
+.tag.roundup { background: var(--win-100); color: var(--win); }
+
+.card-date {
+  display: block;
+  margin-top: var(--space-2);
+  font-family: var(--font-data);
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-muted);
+}
+
+.card h3 {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: var(--step-1);
+  line-height: 1.25;
+}
+.card h3 a { color: var(--brand-900); }
+.card h3 a:hover { color: var(--brand-600); text-decoration: none; }
+
+.card-pair {
+  grid-column: 2;
+  grid-row: 2;
+  margin: var(--space-1) 0 0;
+  font-family: var(--font-data);
+  font-size: var(--step--1);
+  color: var(--ink-muted);
+}
+
+.card-summary {
+  grid-column: 2;
+  grid-row: 3;
+  margin: var(--space-2) 0 0;
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+
+/* One click target over the whole row. */
+.card-link::after { content: ""; position: absolute; inset: 0; }
+
+/* ----------------------------------------------------- the tool index */
+
+/* Seven short names in five wide columns leaves three empty cells and a hole
+   in the page. A wrapped row packs them tight at any width. */
+.tool-index {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-3) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.tool-index li { border-bottom: 0; }
+.tool-index a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: var(--space-2) var(--space-4);
+  color: var(--ink-2);
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: 999px;
+  font-size: var(--step--1);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.tool-index a:hover {
+  color: #fff;
+  background: var(--brand-800);
+  border-color: var(--brand-800);
+  text-decoration: none;
+}
+.tool-note { font-size: var(--step--1); color: var(--ink-muted); margin: var(--space-3) 0 0; }
+
+/* ---------------------------------------------------------- the method */
+
+.method {
+  margin: var(--space-6) 0 var(--space-5);
+  padding: var(--space-5);
+  background: var(--surface);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--radius);
+}
+.method h2 { font-size: var(--step-2); margin-bottom: var(--space-3); }
+.method p { color: var(--ink-2); max-width: var(--measure); }
+.method p:last-child { margin-bottom: 0; }
+
+/* ============================================================== article */
+
+/* A ruled head, not a coloured hero. UI.md §5: the reader arrived from a
+   specific query and wants the answer; a band above the H1 is a delay. */
+.post-hero {
+  padding: var(--space-4) 0;
+  border-bottom: var(--rule-hair) solid var(--rule);
+}
+.post-hero h1 { max-width: 30ch; margin-bottom: var(--space-3); }
+.post-hero .breadcrumb { margin-bottom: var(--space-3); }
+
+.breadcrumb { font-family: var(--font-data); font-size: var(--step--1); color: var(--ink-muted); }
+.breadcrumb ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.breadcrumb li + li::before { content: "/"; margin-right: var(--space-2); color: var(--rule-2); }
+.breadcrumb a { color: var(--brand-600); }
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+  font-family: var(--font-data);
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-muted);
+}
+.post-meta .updated { color: var(--ink-2); font-weight: 500; }
+
+.post-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18rem;
+  gap: var(--space-6);
+  align-items: start;
+  padding: var(--space-5) 0 var(--space-6);
+}
+.post-shell { min-width: 0; }
+
+/* The short answer, above everything, marked in brass. */
+.answer {
+  margin: 0 0 var(--space-5);
+  padding: var(--space-4);
+  background: var(--surface);
+  border: var(--rule-hair) solid var(--rule);
+  border-left: var(--rule-heavy) solid var(--mark);
+  border-radius: var(--radius);
+}
+.answer-label { display: block; margin-bottom: var(--space-2); color: var(--ink); }
+.answer .lead { margin: 0; font-size: var(--step-1); line-height: 1.5; color: var(--ink); }
+
+.lead { font-size: var(--step-1); line-height: 1.5; max-width: var(--measure); }
+
+.post-body h2 {
+  font-size: var(--step-2);
+  margin: var(--space-6) 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: var(--rule-hair) solid var(--rule);
+}
+.post-body h3 { font-size: var(--step-1); margin: var(--space-5) 0 var(--space-2); color: var(--brand-800); }
+.post-body p, .post-body ul, .post-body ol { max-width: var(--measure); }
+.post-body p { margin-bottom: var(--space-3); }
+.post-body ul, .post-body ol { margin: 0 0 var(--space-3); padding-left: var(--space-4); }
+.post-body li { margin-bottom: var(--space-1); }
+.post-body li::marker { color: var(--rule-2); }
+.post-body strong { font-weight: 600; color: var(--ink); }
+
+.post-body blockquote {
+  margin: var(--space-4) 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: var(--rule-heavy) solid var(--brand-500);
+  background: var(--surface);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+.post-body blockquote p:last-child { margin-bottom: 0; }
+
+.post-body pre {
+  background: var(--brand-900);
+  color: var(--brand-100);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  overflow-x: auto;
+  font-size: var(--step--1);
+}
+
+/* Screenshots: a hairline border, no shadow, no browser chrome, no tilt. */
+.post-body figure.shot { margin: var(--space-4) 0; }
+.post-body figure.shot img {
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--radius);
+  width: 100%;
+}
+.post-body figure.shot figcaption {
+  font-family: var(--font-data);
+  font-size: var(--step--1);
+  color: var(--ink-muted);
+  padding-top: var(--space-2);
+  line-height: 1.4;
+}
+
+/* Source superscripts — the visible half of the sourcing claim. */
+.ref { font-family: var(--font-data); font-size: 0.7em; line-height: 0; }
+.ref a { color: var(--mark); padding: 0 1px; font-weight: 500; }
+
+/* ================================================= the comparison table */
+/* The signature element (UI.md §4). Boldness is spent here and nowhere else. */
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 0 0 var(--space-3);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+table.spec {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step-0);
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+}
+
+table.spec caption {
+  font-family: var(--font-data);
+  font-size: var(--step--1);
+  color: var(--ink-muted);
+  text-align: left;
+  padding: var(--space-3);
+  border-bottom: var(--rule-hair) solid var(--rule);
+}
+
+/* A light header with strong labels, not a solid black band. The 2px rule
+   below it still does the structural work the band was doing. */
+table.spec thead th {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  background: var(--surface);
+  padding: var(--space-3);
+  white-space: nowrap;
+  vertical-align: bottom;
+  border-bottom: var(--rule-mid) solid var(--rule-2);
+}
+
+table.spec tbody th,
+table.spec tbody td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--rule-hair) solid var(--rule);
+  vertical-align: top;
+}
+table.spec tbody th {
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface);
+  white-space: normal;
+}
+table.spec tbody tr:last-child th,
+table.spec tbody tr:last-child td { border-bottom: 0; }
+table.spec tbody tr:hover td { background: var(--mark-wash); }
+
+/* A row-group boundary — commercial rows above, capability rows below. */
+table.spec tbody tr.group th,
+table.spec tbody tr.group td { border-top: var(--rule-mid) solid var(--rule-2); }
+
+/* Winner: wash, glyph and a hidden label. Legible with colour removed. */
+table.spec td.win, table.spec tbody th.win {
+  background: var(--win-wash);
+  color: var(--win);
+  font-weight: 600;
+}
+table.spec tbody tr:hover td.win { background: var(--win-100); }
+.win-mark { color: var(--win); font-weight: 700; margin-right: var(--space-1); }
+
+/* Absence of data is information. Never blank, never an em-dash. */
+.np {
+  color: var(--ink-muted);
+  background: var(--surface);
+  border: var(--rule-hair) solid var(--rule);
+  font-size: 0.75rem;
+  padding: 1px var(--space-2);
+  border-radius: 999px;
+}
+
+/* The QA stamp under the table. */
+.stamp {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin: 0 0 var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  background: var(--win-wash);
+  border: var(--rule-hair) solid var(--win-100);
+  border-radius: var(--radius);
+  font-family: var(--font-data);
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums;
+}
+.stamp-item { display: flex; gap: var(--space-2); align-items: baseline; }
+.stamp dt { color: var(--win); text-transform: uppercase; letter-spacing: 0.03em; }
+.stamp dd { margin: 0; color: var(--ink); font-weight: 500; }
+
+/* ------------------------------------------------ disclosure and sources */
+
+.disclosure {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4);
+  background: var(--mark-wash);
+  border: var(--rule-hair) solid var(--brand-100);
+  border-radius: var(--radius);
+  max-width: var(--measure);
+}
+.disclosure h2 {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--brand-700);
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  border: 0;
+}
+.disclosure p { margin: 0; font-size: var(--step--1); color: var(--ink-2); }
+
+.sources {
+  margin-top: var(--space-5);
+  padding: var(--space-5);
+  background: var(--surface);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--radius);
+}
+.sources h2 { font-size: var(--step-2); margin-bottom: var(--space-3); padding: 0; border: 0; }
+.sources ol { margin: 0; padding-left: var(--space-4); font-size: var(--step--1); }
+.sources li { margin-bottom: var(--space-1); }
+.sources li:target { background: var(--mark-100); border-radius: var(--radius-sm); }
+.sources .src-label { color: var(--ink-muted); }
+
+.src-more { margin: var(--space-4) 0 var(--space-2); font-size: var(--step--1); font-weight: 600; color: var(--ink-2); }
+.src-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.src-list a {
+  display: inline-block;
+  padding: 2px var(--space-3);
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: 999px;
+  font-family: var(--font-data);
+  font-size: var(--step--1);
+}
+.src-list a:hover { border-color: var(--brand-600); text-decoration: none; }
+
+/* -------------------------------------------------------- the side rail */
+
+.post-aside {
+  position: sticky;
+  top: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  font-size: var(--step--1);
+}
+.aside-card {
+  padding: var(--space-4);
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.aside-label { display: block; margin: 0 0 var(--space-3); }
+
+.aside-facts { margin: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.aside-facts > div {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: baseline;
+  padding-bottom: var(--space-2);
+  border-bottom: var(--rule-hair) solid var(--rule);
+}
+.aside-facts > div:last-child { border-bottom: 0; padding-bottom: 0; }
+.aside-facts dt { color: var(--ink-muted); }
+.aside-facts dd { margin: 0; font-family: var(--font-data); color: var(--ink); }
+
+.aside-related { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.aside-related li { display: flex; flex-direction: column; gap: 2px; }
+.aside-related a { color: var(--brand-900); font-weight: 600; line-height: 1.3; }
+.aside-related a:hover { color: var(--brand-600); }
+.aside-related span { font-family: var(--font-data); color: var(--ink-muted); }
+
+/* The one card that is meant to be pressed reverses out. */
+.aside-cta { background: var(--brand-900); border-color: var(--brand-900); box-shadow: var(--shadow-md); }
+.aside-cta .aside-label { color: var(--brand-500); }
+.aside-cta p { margin-bottom: var(--space-3); color: var(--brand-100); line-height: 1.45; }
+.aside-cta .button { width: 100%; background: #fff; border-color: #fff; color: var(--brand-900); }
+.aside-cta .button:hover { background: var(--brand-100); border-color: var(--brand-100); color: var(--brand-900); }
+.aside-plain { margin: 0; color: var(--ink-2); line-height: 1.5; }
+
+/* On-page contents. Numbered, because a catalogue numbers its sections. */
+.toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+.toc li { counter-increment: toc; border-bottom: var(--rule-hair) solid var(--rule); }
+.toc li:last-child { border-bottom: 0; }
+.toc a { display: block; padding: var(--space-2) 0; color: var(--ink-2); line-height: 1.35; }
+.toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  font-family: var(--font-data);
+  color: var(--ink-muted);
+  margin-right: var(--space-3);
+}
+.toc a:hover { color: var(--brand-600); text-decoration: none; }
+
+/* ================================================ views, votes, sharing */
+
+.actions-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  margin: var(--space-5) 0 0;
+  padding-top: var(--space-4);
+  border-top: var(--rule-hair) solid var(--rule);
+}
+.actions-bar.top {
+  margin: 0 0 var(--space-4);
+  padding: 0 0 var(--space-3);
+  border-top: 0;
+  border-bottom: var(--rule-hair) solid var(--rule);
+}
+.actions-bar.top .actions-share { margin-left: 0; }
+
+.actions-stat { display: flex; align-items: baseline; gap: var(--space-2); }
+.actions-n {
+  font-family: var(--font-data);
+  font-size: var(--step-0);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  font-weight: 500;
+}
+.actions-vote { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
+.actions-question { font-size: var(--step--1); color: var(--ink-muted); }
+.actions-share { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-left: auto; }
+
+.vote-btn, .share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: var(--space-1) var(--space-3);
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  font-weight: 500;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.vote-btn:hover, .share-btn:hover {
+  border-color: var(--rule-2);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+}
+.vote-btn.on.up { border-color: var(--good); background: var(--good-100); color: var(--good); }
+.vote-btn.on.down { border-color: var(--flag); background: var(--flag-100); color: var(--flag); }
+.vote-n { font-family: var(--font-data); font-variant-numeric: tabular-nums; color: var(--ink-muted); }
+.vote-btn.on .vote-n { color: inherit; }
+.share-btn svg { flex: none; }
+.share-btn.icon-only { width: 36px; padding: var(--space-1); }
+
+/* Each network wears its own colour, but only on hover and focus. At rest the
+   row stays the same neutral grey as every other control, so the page still
+   reads as one system and the amber in the table keeps being the only colour
+   competing for attention (UI.md §2). */
+
+.share-btn.li { --net: #0A66C2; --net-wash: #E8F1FA; }
+.share-btn.x  { --net: #0F1419; --net-wash: #EDEFF1; }
+.share-btn.wa { --net: #128C7E; --net-wash: #E3F3F0; }
+.share-btn.rd { --net: #E03D00; --net-wash: #FDEBE4; }
+.share-btn.em { --net: var(--brand-600); --net-wash: #E9EEF4; }
+
+.share-btn.li:hover, .share-btn.x:hover, .share-btn.wa:hover,
+.share-btn.rd:hover, .share-btn.em:hover,
+.share-btn.li:focus-visible, .share-btn.x:focus-visible, .share-btn.wa:focus-visible,
+.share-btn.rd:focus-visible, .share-btn.em:focus-visible {
+  color: var(--net);
+  border-color: var(--net);
+  background: var(--net-wash);
+}
+
+/* Copy link has no brand of its own, so it confirms in the success green
+   instead — the same signal the useful/not-useful buttons use. */
+.share-btn.copied {
+  color: var(--good);
+  border-color: var(--good);
+  background: var(--good-100);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vote-btn, .share-btn { transition: none; }
+}
+
+/* ================================================================ forms */
+
+.form-page { max-width: 46rem; padding: var(--space-5) 0 var(--space-6); }
+.form-page h1 { font-size: var(--step-3); margin-bottom: var(--space-3); }
+.form-page > p { color: var(--ink-2); max-width: var(--measure); }
+
+.field { margin-bottom: var(--space-4); }
+.field label {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: var(--space-2);
+}
+.field .hint {
+  display: block;
+  font-size: var(--step--1);
+  color: var(--ink-muted);
+  margin-top: var(--space-2);
+  line-height: 1.45;
+}
+.req { font-weight: 400; font-size: var(--step--1); color: var(--ink-muted); }
+.req::before { content: "· "; }
+
+input[type="text"], input[type="email"], input[type="password"],
+input[type="url"], select, textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  color: var(--ink);
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule-2);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+input::placeholder, textarea::placeholder { color: var(--ink-muted); }
+input:hover, select:hover, textarea:hover { border-color: var(--rule-2); }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--brand-600);
+  box-shadow: 0 0 0 3px var(--brand-100);
+  outline: none;
+}
+
+textarea { min-height: 9rem; line-height: 1.5; resize: vertical; }
+textarea.code { font-family: var(--font-data); font-size: var(--step--1); min-height: 24rem; }
+
+.checkbox { display: flex; align-items: center; gap: var(--space-3); min-height: 44px; }
+.checkbox input { width: 18px; height: 18px; min-height: 0; accent-color: var(--mark); }
+.checkbox label { margin: 0; font-weight: 400; }
+
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; margin-top: var(--space-4); }
+
+button, .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #fff;
+  background: var(--mark);
+  border: var(--rule-hair) solid var(--mark);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+button:hover, .button:hover { background: var(--mark-700); border-color: var(--mark-700); color: #fff; text-decoration: none; }
+button:disabled { background: var(--rule-2); border-color: var(--rule-2); color: var(--paper); cursor: not-allowed; box-shadow: none; }
+
+button.secondary, .button.secondary { background: var(--paper); color: var(--ink); border-color: var(--rule-2); }
+button.secondary:hover, .button.secondary:hover { background: var(--surface); color: var(--ink); border-color: var(--rule-2); }
+
+button.danger, .button.danger { background: var(--flag); border-color: var(--flag); }
+button.danger:hover { background: #B91C1C; border-color: #B91C1C; }
+button.danger-text { background: var(--paper); color: var(--flag); border-color: var(--rule-2); }
+button.danger-text:hover { background: var(--flag-100); border-color: var(--flag); color: var(--flag); }
+
+.notice {
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  background: var(--mark-wash);
+  border: var(--rule-hair) solid var(--brand-100);
+  border-radius: var(--radius);
+  max-width: var(--measure);
+}
+.notice p { margin: 0; }
+.notice.bad { border-color: var(--flag); background: var(--flag-100); color: var(--flag); }
+.notice.good { border-color: var(--good); background: var(--good-100); color: var(--good); }
+
+/* Sign-in: a narrow column, not a wide card holding two fields. */
+.form-page.auth {
+  max-width: 24rem;
+  margin: var(--space-6) auto;
+  padding: var(--space-5);
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+.form-page.auth h1 { font-size: var(--step-2); margin-bottom: var(--space-4); }
+.form-page.auth .actions button { width: 100%; }
+.auth-mark { display: block; margin-bottom: var(--space-3); }
+.auth-note { font-size: var(--step--1); color: var(--ink-muted); }
+
+/* Request page: the form, and the answer to the question a reader has before
+   filling anything in. */
+.request-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+.request-layout .form-page { max-width: none; }
+.request-aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5) 0 var(--space-6);
+  font-size: var(--step--1);
+}
+
+/* Not a grid: the item's text is a bare text node, and a grid would drop it
+   into the number column and wrap it one word per line. */
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: var(--space-2) 0 var(--space-2) 2.75rem;
+  border-bottom: var(--rule-hair) solid var(--rule);
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+.steps li:last-child { border-bottom: 0; }
+.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: var(--space-2);
+  font-family: var(--font-data);
+  color: var(--ink-muted);
+}
+.steps strong { display: block; color: var(--ink); font-weight: 600; }
+
+/* ================================================================ admin */
+
+.admin-shell { max-width: 100%; }
+
+.admin-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  margin: var(--space-4) 0 var(--space-5);
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  font-size: var(--step--1);
+}
+.admin-bar .spacer { margin-left: auto; }
+.admin-bar .admin-count { color: var(--ink-muted); }
+.admin-bar .button { min-height: 36px; padding: var(--space-1) var(--space-3); }
+
+.admin-section { margin-bottom: var(--space-6); }
+.admin-section > h2 {
+  font-size: var(--step-1);
+  letter-spacing: -0.01em;
+  padding-bottom: var(--space-2);
+  border-bottom: var(--rule-hair) solid var(--rule);
+  margin-bottom: var(--space-4);
+}
+
+table.list {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+table.list th, table.list td {
+  padding: var(--space-3);
+  border-bottom: var(--rule-hair) solid var(--rule);
+  vertical-align: top;
+}
+table.list thead th {
+  font-weight: 600;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  background: var(--surface);
+  border-bottom: var(--rule-hair) solid var(--rule-2);
+  white-space: nowrap;
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+table.list tbody th { font-weight: 600; color: var(--ink); }
+table.list tbody tr:last-child th, table.list tbody tr:last-child td { border-bottom: 0; }
+table.list tbody tr:hover { background: var(--mark-wash); }
+
+/* "no votes" is not an error — it borrows .np, so neutralise it here. */
+table.list .np { border-color: var(--rule); color: var(--ink-muted); }
+table.list td.wrap, table.list th.wrap { white-space: normal; max-width: 30rem; }
+table.list th:last-child, table.list td:last-child { text-align: right; }
+table.list td .np { white-space: nowrap; }
+
+/* Column widths, so the identity column takes the slack and the rest stay
+   the width of their content instead of drifting apart. */
+.posts-list th:nth-child(2), .posts-list td:nth-child(2),
+.posts-list th:nth-child(3), .posts-list td:nth-child(3) { width: 1%; white-space: nowrap; }
+.posts-list th:last-child, .posts-list td:last-child { width: 1%; }
+.requests-list th:last-child, .requests-list td:last-child { width: 1%; }
+
+/* One row is one thing: a title with its facts under it, not eight columns. */
+.post-cell { display: flex; flex-direction: column; gap: var(--space-1); }
+.post-title { font-size: var(--step-0); font-weight: 600; line-height: 1.3; }
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+}
+.post-meta .sep { color: var(--rule-2); }
+
+.views-cell { display: flex; flex-direction: column; gap: var(--space-2); align-items: flex-start; }
+.views-n { font-family: var(--font-data); font-size: var(--step-0); color: var(--ink); line-height: 1; }
+.votes { white-space: nowrap; color: var(--ink-2); }
+
+.badge {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 1px var(--space-2);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.badge.live { color: var(--good); background: var(--good-100); }
+.badge.draft { color: var(--win); background: var(--win-100); }
+
+.inline-form { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; justify-content: flex-end; }
+.inline-form select { min-height: 34px; width: auto; padding: var(--space-1) var(--space-2); font-size: var(--step--1); }
+.inline-form button { min-height: 34px; padding: var(--space-1) var(--space-3); font-size: var(--step--1); }
+
+.manage { display: flex; flex-wrap: nowrap; gap: var(--space-1); align-items: center; justify-content: flex-end; }
+.manage button, .manage .button {
+  min-height: 30px;
+  padding: var(--space-1) var(--space-2);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+.view-link { font-family: var(--font-data); font-size: 0.75rem; }
+
+.filter-row { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0 0 var(--space-4); }
+.filter-row a {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--step--1);
+  color: var(--ink-2);
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: 999px;
+}
+.filter-row a:hover { background: var(--surface); color: var(--ink); text-decoration: none; }
+.filter-row a[aria-current="page"] { background: var(--mark); border-color: var(--mark); color: #fff; font-weight: 500; }
+
+/* The editor is a working surface, not an article — give it the page. */
+.form-page.wide { max-width: 100%; }
+.form-page.wide .field textarea.code { min-height: 28rem; }
+.form-page .actions { justify-content: flex-end; }
+/* Only the full-width editor spreads its cancel to the far rail; on a narrow
+   form that leaves two buttons shouting at each other across the gap. */
+.form-page.wide .actions .button.secondary { order: -1; margin-right: auto; }
+
+
+.image-insert {
+  margin-top: var(--space-3);
+  padding: var(--space-4);
+  background: var(--surface);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--radius);
+}
+.image-insert .field { margin-bottom: var(--space-3); }
+
+/* ------------------------------------------------------- admin: traffic */
+
+.traffic-panel {
+  padding: var(--space-4) var(--space-5) var(--space-4);
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.traffic-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-4) var(--space-6);
+  margin-bottom: var(--space-4);
+}
+.traffic-stat { display: flex; flex-direction: column; gap: var(--space-1); }
+.traffic-n {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  line-height: 1;
+}
+.traffic-note { flex: 1 1 22rem; margin: 0; font-size: var(--step--1); color: var(--ink-muted); max-width: 52ch; }
+
+/* The chart. A scale column, then the plot with the day band under it — the
+   band is a sibling of the plot, so labels add height instead of eating it. */
+.daychart { margin: 0; }
+.daychart-frame { display: flex; gap: var(--space-3); padding-top: var(--space-4); }
+
+.daychart-scale {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: var(--plot-h);
+  font-family: var(--font-data);
+  font-size: 0.6875rem;
+  color: var(--ink-muted);
+  text-align: right;
+  min-width: 1.75rem;
+}
+.daychart-tick { line-height: 1; transform: translateY(-0.35em); }
+.daychart-tick:first-child { transform: none; }
+
+.daychart-area { flex: 1; min-width: 0; }
+.daychart-plot { position: relative; height: var(--plot-h); }
+.daychart-rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--rule);
+}
+.daychart-bars { position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 2px; }
+
+.daychart-col {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.daychart-col:focus { outline: none; }
+.daychart-col:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: var(--radius-sm); }
+
+.daychart-total {
+  position: relative;
+  width: 100%;
+  /* Thin marks. Fourteen bars across a 1200px shell would otherwise be slabs. */
+  max-width: 42px;
+  min-height: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--brand-100);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: background var(--dur) var(--ease);
+}
+.daychart-col.is-zero .daychart-total { background: var(--rule-2); border-radius: 999px; }
+.daychart-unique {
+  width: 100%;
+  background: var(--mark);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  /* The 2px surface gap that separates the two stacked segments. */
+  box-shadow: 0 -2px 0 var(--paper);
+}
+.daychart-value {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-bottom: var(--space-1);
+  font-family: var(--font-data);
+  font-size: 0.6875rem;
+  color: var(--ink-muted);
+  line-height: 1;
+}
+
+.daychart-tip {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: none;
+  white-space: nowrap;
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--brand-100);
+  background: var(--brand-900);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  pointer-events: none;
+}
+.daychart-tip strong { display: block; color: #fff; font-weight: 600; }
+.daychart-col:hover .daychart-tip, .daychart-col:focus-visible .daychart-tip { display: block; }
+.daychart-col:hover .daychart-total { background: var(--brand-500); }
+.daychart-col.is-zero:hover .daychart-total { background: var(--ink-muted); }
+/* The tip carries the same figure, so the label steps aside rather than
+   printing the number twice on top of itself. */
+.daychart-col:hover .daychart-value,
+.daychart-col:focus-visible .daychart-value { opacity: 0; }
+
+.daychart-days {
+  display: flex;
+  gap: 2px;
+  padding-top: var(--space-2);
+  border-top: var(--rule-hair) solid var(--rule-2);
+  margin-top: 0;
+}
+.daychart-days span {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-family: var(--font-data);
+  font-size: 0.6875rem;
+  color: var(--ink-muted);
+}
+
+.daychart-key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-3);
+  font-size: var(--step--1);
+  color: var(--ink-muted);
+}
+.key-item { display: inline-flex; align-items: center; gap: var(--space-2); }
+.key-swatch { width: 10px; height: 10px; border-radius: 3px; }
+.key-total { background: var(--brand-100); border: var(--rule-hair) solid var(--rule-2); }
+.key-unique { background: var(--mark); }
+.key-quiet { margin-left: auto; }
+
+.spark { display: block; }
+
+/* =============================================================== footer */
+
+.site-footer {
+  background: var(--brand-900);
+  color: var(--brand-100);
+  padding: var(--space-6) 0;
+  font-size: var(--step--1);
+}
+/* auto-fit, not a fixed three: the footer holds however many disclosures it
+   holds, and a hard column count leaves a phantom empty column behind. */
+.site-footer .shell {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: var(--space-5);
+}
+.site-footer p { margin: 0; line-height: 1.6; max-width: 46ch; color: #98A5BC; }
+.site-footer strong {
+  display: block;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+.site-footer a { color: var(--brand-100); }
+.site-footer a:hover { color: #fff; }
+
+/* ============================================================ utilities */
+
+.vh {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: var(--space-2);
+  box-shadow: var(--shadow-md);
+  background: var(--mark);
+  color: #fff;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  z-index: 10;
+}
+.skip-link:focus { left: var(--space-4); }
+
+/* ========================================================== narrow view */
+
+@media (max-width: 78rem) {
+  .featured { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
+  .featured-label, .featured h2, .featured-meta, .featured-summary,
+  .featured-table, .featured-more { grid-column: 1; grid-row: auto; }
+  .featured-table { margin-bottom: var(--space-3); }
+}
+
+@media (max-width: 68rem) {
+  .index-head { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
+  .index-head h1, .index-head .lead { grid-column: 1; }
+  .index-head .lead { padding-left: var(--space-4); }
+  .post-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
+  .post-aside { position: static; }
+  .request-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  .request-aside { padding-top: 0; }
+}
+
+@media (max-width: 60rem) {
+  .masthead-note { display: none; }
+  .site-footer .shell { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  .manage, .inline-form { justify-content: flex-start; flex-wrap: wrap; }
+  table.list th:last-child, table.list td:last-child { text-align: left; }
+  .posts-list th:nth-child(2), .posts-list td:nth-child(2),
+  .posts-list th:nth-child(3), .posts-list td:nth-child(3) { width: auto; }
+  .traffic-panel { padding: var(--space-3); }
+  .daychart-value { display: none; }
+}
+
+@media (max-width: 44rem) {
+  :root { --step-4: 1.875rem; --step-3: 1.5rem; --step-2: 1.1875rem; }
+  .row { grid-template-columns: 1fr; }
+
+  /* Index rows stack, keeping their reading order: kind and date, then title. */
+  .card { grid-template-columns: minmax(0, 1fr); gap: var(--space-2) 0; padding-left: 0; padding-right: 0; }
+  .card-top { grid-column: 1; grid-row: 1; display: flex; align-items: center; gap: var(--space-3); }
+  .card-date { margin-top: 0; }
+  .card h3 { grid-column: 1; grid-row: 2; }
+  .card-pair { grid-column: 1; grid-row: 3; }
+  .card-summary { grid-column: 1; grid-row: 4; }
+
+  .ledger-item { flex: 1 1 9rem; }
+}
+
+/* Motion is state feedback only, and even that goes when asked. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .site-nav, .skip-link, .toc, .actions-bar, .post-aside { display: none; }
+  body { font-size: 10pt; }
+  .post-layout { display: block; }
+  .site-header, .site-footer { background: #fff; color: #000; }
+}
+
+/* ---------------------------------------------------------------- logo */
+/* One mark, one set of colours, every surface. The SVG carries its own
+   white tile so nothing here needs to compensate for the background. */
+
+.logo-mark { display: block; flex: none; border-radius: var(--radius); }
+.auth-mark { background: none; padding: 0; }
+
+/* Aside cards can carry more than one paragraph on the settings screen. */
+.aside-plain + .aside-plain { margin-top: var(--space-3); }
+.aside-card code {
+  font-size: 0.85em;
+  background: var(--surface);
+  padding: 1px 4px;
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+}
+.aside-facts dd { word-break: break-word; }

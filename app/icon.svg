@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="playthetech">
+  <rect width="120" height="120" rx="26" fill="#FFFFFF"/>
+  <path d="M30 16h30a30 30 0 0 1 0 60H50v28H30z" fill="#101F35"/>
+  <path d="M30 76h20v28z" fill="#1B5FE8"/>
+  <path d="M52 32l28 18a4 4 0 0 1 0 7L52 75z" fill="#FFFFFF"/>
+  <path d="M58 43l17 10-17 10z" fill="#1B5FE8"/>
+</svg>

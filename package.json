@@ -1,0 +1,21 @@
+{
+  "name": "playthetech",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "next dev --port 4300",
+    "build": "next build",
+    "start": "next start --port ${PORT:-4300}",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "marked": "^18.0.10",
+    "next": "^16.3.1",
+    "pg": "^8.23.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  }
+}

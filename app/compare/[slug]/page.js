@@ -89,9 +89,11 @@ export async function generateMetadata({ params }) {
       images: [
         {
           url: imageUrl,
+          secureUrl: imageUrl,
           width: 1200,
           height: 630,
           alt: post.title,
+          type: imageUrl.endsWith('.jpg') ? 'image/jpeg' : 'image/png',
         },
       ],
     },

@@ -18,21 +18,31 @@ export default async function NewPostPage({ searchParams }) {
 
   return (
     <div className="shell admin-shell">
-      <div className="form-page wide">
       <div className="admin-bar">
-        <a href="/admin">← Admin</a>
+        <a className="button secondary" href="/admin">← Back to Dashboard</a>
         <span className="spacer" />
-        {post?.published ? <a href={`/compare/${post.slug}`}>View published page</a> : null}
+        {post?.published ? (
+          <a className="button" href={`/compare/${post.slug}`} target="_blank" rel="noreferrer">
+            View Live Post ↗
+          </a>
+        ) : null}
       </div>
 
-      <h1>{post ? `Edit: ${post.title}` : 'New comparison'}</h1>
-      {!post && Number.isInteger(id) && id > 0 ? (
-        <div className="notice bad" role="alert">
-          <p>No post with id {id}. This form will create a new one instead.</p>
+      <div className="admin-card editor-card">
+        <div className="editor-card-head">
+          <h1>{post ? `Edit: ${post.title}` : 'Create New Comparison'}</h1>
+          <p className="editor-card-subtitle">
+            Author an independent primary-sourced comparison matrix and editorial guide.
+          </p>
         </div>
-      ) : null}
 
-      <PostForm post={post} />
+        {!post && Number.isInteger(id) && id > 0 ? (
+          <div className="notice bad" role="alert">
+            <p>No post with id {id}. This form will create a new one instead.</p>
+          </div>
+        ) : null}
+
+        <PostForm post={post} />
       </div>
     </div>
   )

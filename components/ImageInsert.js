@@ -87,15 +87,17 @@ export default function ImageInsert({ textareaRef, onInsert }) {
 
   return (
     <div className="image-insert">
-      <p className="aside-label">Insert an image</p>
+      <p className="aside-label">Inline Image Attachment</p>
 
       <div className="row">
         <div className="field">
-          <label htmlFor="img-alt">Alt text <span className="req">required</span></label>
+          <label htmlFor="img-alt">
+            Alt Text <span className="req-pill">Required</span>
+          </label>
           <input
             id="img-alt" type="text" value={alt} maxLength={300}
             onChange={(e) => setAlt(e.target.value)}
-            placeholder="What the screenshot shows"
+            placeholder="Describe what the screenshot shows"
           />
         </div>
         <div className="field">
@@ -108,14 +110,14 @@ export default function ImageInsert({ textareaRef, onInsert }) {
         </div>
       </div>
 
-      <div className="actions" style={{ marginTop: 0 }}>
+      <div className="image-insert-actions">
         <button
           type="button"
-          className="secondary"
+          className="button secondary"
           disabled={busy}
           onClick={() => fileRef.current?.click()}
         >
-          {busy ? 'Processing…' : 'Choose image'}
+          {busy ? 'Processing…' : '📁 Choose Image'}
         </button>
         <input
           ref={fileRef}
@@ -124,12 +126,12 @@ export default function ImageInsert({ textareaRef, onInsert }) {
           onChange={handle}
           className="vh"
         />
-        <span className="hint" style={{ marginTop: 0 }}>
-          Downscaled to {MAX_W}px wide and re-encoded before it is inlined.
+        <span className="hint">
+          Downscaled to {MAX_W}px wide and converted to optimized WebP.
         </span>
       </div>
 
-      {note ? <p className="hint" style={{ color: 'var(--brand-700)' }}>{note}</p> : null}
+      {note ? <p className="hint" style={{ color: '#DC2626', fontWeight: 600 }}>{note}</p> : null}
     </div>
   )
 }

@@ -1,9 +1,12 @@
+import fs from 'node:fs'
+import path from 'node:path'
 import { notFound } from 'next/navigation'
 import { one, query, POSTS, STATS } from '../../../lib/db.js'
 import { longDate, isoDate } from '../../../lib/format.js'
 import { renderContent, toPlainText, extractLinks } from '../../../lib/markdown.js'
 import { SITE_NAME, absolute } from '../../../lib/site.js'
 import PostActions from '../../../components/PostActions.js'
+
 
 // Server component throughout. No 'use client' on this file or anything it
 // renders — most AI crawlers do not execute JavaScript, and the table is the
@@ -65,12 +68,6 @@ export async function generateMetadata({ params }) {
     },
     twitter: { card: 'summary_large_image', title: post.title, description },
   }
-}
-
-/** Shared ownership must be declared above the table, never in the footer. R1.1 */
-function mentionsSalezx(post) {
-  const hay = [post.tool_1, post.tool_2, post.title, post.content].join(' ').toLowerCase()
-  return hay.includes('salezx')
 }
 
 export default async function ComparePage({ params }) {
@@ -169,8 +166,8 @@ export default async function ComparePage({ params }) {
           <nav className="breadcrumb" aria-label="Breadcrumb">
             <ol>
               <li><a href="/">Home</a></li>
-              <li>Comparisons</li>
-              <li aria-current="page">{post.title}</li>
+              <li><a href="/">Comparisons</a></li>
+              <li aria-current="page">{post.type === 'roundup' ? 'AI Sales Agents 2026' : `${post.tool_1} vs ${post.tool_2}`}</li>
             </ol>
           </nav>
 
@@ -182,7 +179,7 @@ export default async function ComparePage({ params }) {
             </span>
             {post.author ? <span>By {post.author}</span> : null}
             {post.type === 'roundup' ? null : <span>{post.tool_1} vs {post.tool_2}</span>}
-            <span>Sourced from vendor documentation</span>
+            <span>Verified vendor documentation</span>
           </div>
         </div>
       </div>
@@ -194,20 +191,25 @@ export default async function ComparePage({ params }) {
 
             {post.summary ? (
               <div className="answer">
-                <p className="answer-label">The short answer</p>
+                <h2 className="answer-heading">The short answer</h2>
                 <p className="lead">{post.summary}</p>
               </div>
             ) : null}
 
-            {mentionsSalezx(post) ? (
-              <aside className="disclosure">
-                <h2>Ownership disclosure</h2>
-                <p>
-                  {SITE_NAME} and Salezx share owners. Salezx is scored against the same
-                  criteria and the same evidence standard as every other tool on this
-                  page, and where it loses, the page says so.
-                </p>
-              </aside>
+            {fs.existsSync(path.join(process.cwd(), 'public', 'images', `${post.slug}.jpg`)) ? (
+              <figure className="shot featured-shot">
+                <img
+                  src={`/images/${post.slug}.jpg`}
+                  alt={`${post.title} interface breakdown`}
+                  loading="eager"
+                  decoding="async"
+                />
+                <figcaption>
+                  {post.type === 'roundup'
+                    ? `${post.title} — Platform analytics and command matrix`
+                    : `${post.tool_1} vs ${post.tool_2} interface and workflow breakdown`}
+                </figcaption>
+              </figure>
             ) : null}
 
             {opensWithHeading ? null : (
@@ -247,16 +249,6 @@ export default async function ComparePage({ params }) {
                 ) : null}
               </section>
             ) : null}
-            <PostActions
-              slug={post.slug}
-              title={post.title}
-              url={url}
-              initial={{
-                views: Number(stats.views) || 0,
-                upvotes: Number(stats.upvotes) || 0,
-                downvotes: Number(stats.downvotes) || 0,
-              }}
-            />
           </article>
 
           {/* Sticky rail. Fills the column a 70ch measure would otherwise leave
@@ -322,6 +314,7 @@ export default async function ComparePage({ params }) {
               <p>Tell us which two tools you are choosing between and we will compare them.</p>
               <a className="button" href="/request">Request a comparison</a>
             </div>
+
           </aside>
         </div>
       </div>

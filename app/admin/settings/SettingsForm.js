@@ -62,42 +62,52 @@ export default function SettingsForm({ currentEmailValue }) {
       )}
 
       <div className="field">
-        <label htmlFor="s-email">Sign-in email <span className="req">required</span></label>
+        <label htmlFor="s-email">
+          Sign-in Email <span className="req-pill">Required</span>
+        </label>
         <input
           id="s-email" type="email" value={email}
           onChange={(e) => setEmail(e.target.value)} autoComplete="username"
+          placeholder="editor@playthetech.com"
         />
       </div>
 
       <div className="field">
-        <label htmlFor="s-current">Current password <span className="req">required</span></label>
+        <label htmlFor="s-current">
+          Current Password <span className="req-pill">Required</span>
+        </label>
         <input
           id="s-current" type="password" value={current}
           onChange={(e) => setCurrent(e.target.value)} autoComplete="current-password"
+          placeholder="••••••••••••"
         />
-        <span className="hint">Proves it is you, so a stolen session alone cannot lock you out.</span>
+        <span className="hint">Proves identity to protect against unauthorized password changes.</span>
       </div>
 
       <div className="row">
         <div className="field">
-          <label htmlFor="s-new">New password</label>
+          <label htmlFor="s-new">New Password</label>
           <input
             id="s-new" type="password" value={password}
             onChange={(e) => setPassword(e.target.value)} autoComplete="new-password"
+            placeholder="Minimum 12 characters"
           />
-          <span className="hint">Leave blank to change only the email. Minimum 12 characters.</span>
+          <span className="hint">Leave blank to keep existing password and only change email.</span>
         </div>
         <div className="field">
-          <label htmlFor="s-confirm">Confirm new password</label>
+          <label htmlFor="s-confirm">Confirm New Password</label>
           <input
             id="s-confirm" type="password" value={confirm}
             onChange={(e) => setConfirm(e.target.value)} autoComplete="new-password"
+            placeholder="Repeat new password"
           />
         </div>
       </div>
 
       <div className="actions">
-        <button type="submit" disabled={busy}>{busy ? 'Saving…' : 'Save credentials'}</button>
+        <button type="submit" className="button" disabled={busy}>
+          {busy ? 'Saving…' : 'Save Credentials →'}
+        </button>
         <a className="button secondary" href="/admin">Cancel</a>
       </div>
     </form>

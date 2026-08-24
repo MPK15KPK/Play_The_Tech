@@ -1,7 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="playthetech">
-  <rect width="120" height="120" rx="26" fill="#FFFFFF"/>
-  <path d="M30 16h30a30 30 0 0 1 0 60H50v28H30z" fill="#101F35"/>
-  <path d="M30 76h20v28z" fill="#1B5FE8"/>
-  <path d="M52 32l28 18a4 4 0 0 1 0 7L52 75z" fill="#FFFFFF"/>
-  <path d="M58 43l17 10-17 10z" fill="#1B5FE8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="playthetech">
+  <rect width="100" height="100" rx="22" fill="#0F172A" />
+  <rect x="22" y="24" width="12" height="52" rx="6" fill="#3B82F6" />
+  <path
+    d="M40 25.5C40 23.1 42.7 21.6 44.7 22.8L80.7 47.3C82.5 48.5 82.5 51.5 80.7 52.7L44.7 77.2C42.7 78.4 40 76.9 40 74.5V25.5Z"
+    fill="url(#icon-grad)"
+  />
+  <path
+    d="M48 37L68 50L48 63V37Z"
+    fill="#FFFFFF"
+  />
+  <defs>
+    <linearGradient id="icon-grad" x1="40" y1="22" x2="82" y2="78" gradientUnits="userSpaceOnUse">
+      <stop stopColor="#3B82F6" />
+      <stop offset="1" stopColor="#1D4ED8" />
+    </linearGradient>
+  </defs>
 </svg>

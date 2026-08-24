@@ -1,39 +1,44 @@
 /**
- * The playthetech mark: a P whose bowl is carved out by a play triangle.
- *
- * Colours are fixed, not themed. The mark previously flipped between light and
- * dark depending on the surface behind it, which meant the header logo and the
- * sign-in logo were different images. A logo is one image everywhere — so it
- * carries its own white tile and sits unchanged on any background.
+ * The playthetech brand mark: A modern geometric tech emblem
+ * combining the forward play vector with a benchmark tech pillar.
  */
-const INK = '#101F35'   // navy — the P
-const MARK = '#1B5FE8'  // brand blue — the wedge and the inner triangle
-const TILE = '#FFFFFF'  // the ground the mark always sits on
 
 export function LogoMark({ size = 32 }) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 120 120"
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="logo-mark"
       aria-hidden="true"
       focusable="false"
-      className="logo-mark"
     >
-      {/* Its own ground, so the mark never has to adapt to the page */}
-      <rect width="120" height="120" rx="26" fill={TILE} />
+      {/* Obsidian geometric ground */}
+      <rect width="100" height="100" rx="22" fill="#0F172A" />
 
-      {/* P — stem plus bowl */}
-      <path d="M30 16h30a30 30 0 0 1 0 60H50v28H30z" fill={INK} />
+      {/* Tech Benchmark Pillar (P stem / comparison indicator) */}
+      <rect x="22" y="24" width="12" height="52" rx="6" fill="#3B82F6" />
 
-      {/* The wedge where the bowl meets the stem */}
-      <path d="M30 76h20v28z" fill={MARK} />
+      {/* Forward Play / Tech Vector */}
+      <path
+        d="M40 25.5C40 23.1 42.7 21.6 44.7 22.8L80.7 47.3C82.5 48.5 82.5 51.5 80.7 52.7L44.7 77.2C42.7 78.4 40 76.9 40 74.5V25.5Z"
+        fill="url(#play-tech-grad)"
+      />
 
-      {/* Play shape carved out of the bowl */}
-      <path d="M52 32l28 18a4 4 0 0 1 0 7L52 75z" fill={TILE} />
+      {/* Inner Precision Core */}
+      <path
+        d="M48 37L68 50L48 63V37Z"
+        fill="#FFFFFF"
+      />
 
-      {/* Inner play triangle */}
-      <path d="M58 43l17 10-17 10z" fill={MARK} />
+      <defs>
+        <linearGradient id="play-tech-grad" x1="40" y1="22" x2="82" y2="78" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#3B82F6" />
+          <stop offset="1" stopColor="#1D4ED8" />
+        </linearGradient>
+      </defs>
     </svg>
   )
 }

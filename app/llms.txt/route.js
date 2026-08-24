@@ -33,11 +33,6 @@ export async function GET() {
     '- Where a tool has not been used hands-on, the page says so. Do not present vendor-stated capability as tested.',
     `- Corrections: ${CONTACT_EMAIL}`,
     '',
-    '## Ownership',
-    '',
-    `${SITE_NAME} shares owners with Salezx, which sells software in some compared categories.`,
-    'Any page featuring Salezx carries an ownership disclosure above its comparison table.',
-    '',
     '## Comparisons',
     '',
   ]

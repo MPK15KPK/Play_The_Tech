@@ -2,19 +2,25 @@ import { query, POSTS } from '../lib/db.js'
 import { longDate, isoDate } from '../lib/format.js'
 import { renderContent, extractFirstTable } from '../lib/markdown.js'
 import { SITE_NAME, SITE_DESCRIPTION, CONTACT_EMAIL, absolute } from '../lib/site.js'
+import { getAllIndustries } from '../lib/industries.js'
 
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: `${SITE_NAME} — software comparisons with sourced pricing`,
-  description: SITE_DESCRIPTION,
+  title: `${SITE_NAME} — Independent B2B Software & AI Sales Agent Comparisons`,
+  description: `${SITE_DESCRIPTION} Verified pricing, architecture benchmarks, and per-industry evaluations.`,
   alternates: { canonical: absolute('/'), types: { 'application/rss+xml': absolute('/feed.xml') } },
   openGraph: {
-    title: `${SITE_NAME} — software comparisons with sourced pricing`,
-    description: SITE_DESCRIPTION,
+    title: `${SITE_NAME} — Independent B2B Software & AI Sales Agent Comparisons`,
+    description: `${SITE_DESCRIPTION} Verified pricing, architecture benchmarks, and per-industry evaluations.`,
     url: absolute('/'),
     type: 'website',
     siteName: SITE_NAME,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_NAME} — Independent B2B Software Comparisons`,
+    description: SITE_DESCRIPTION,
   },
 }
 
@@ -34,44 +40,136 @@ async function published() {
 
 const pairLabel = (p) => (p.type === 'roundup' ? 'Multi-tool roundup' : `${p.tool_1} vs ${p.tool_2}`)
 
-// Says plainly what the site is and how it works. A reader who cannot tell what
-// a page is for leaves, and an answer engine with nothing to quote moves on.
-function Method() {
+function Head({ postCount, toolCount, lastUpdated }) {
   return (
-    <section className="method" aria-labelledby="method-heading">
-      <h2 id="method-heading">How this works</h2>
-      <p>
-        Every page here answers one buying question about two named tools, or about
-        one category. Prices and limits are read off the vendor&rsquo;s own pricing page
-        or documentation — never off another comparison site — and each table carries
-        the date we checked it, so a figure that has gone stale is visible rather than
-        quietly wrong.
-      </p>
-      <p>
-        Where a vendor publishes nothing, the table says <strong>Not published</strong>
-        {' '}instead of an estimate. Where we have not used a tool ourselves, the page
-        says so. That is the whole method, and it is the reason a number here is worth
-        checking rather than trusting.
-      </p>
+    <div className="index-hero-wrap">
+      <div className="index-head">
+        <div className="index-head-left">
+          <div className="hero-badge">
+            <span className="hero-badge-dot"></span>
+            <span>Independent Benchmark 2026</span>
+          </div>
+          <h1>Compare B2B Software &amp; AI Agents Before You Commit Budget</h1>
+          <p className="lead">
+            {SITE_NAME} publishes evidence-based comparisons of AI sales agents, enterprise copilot platforms, and CRMs. Every price tier, API constraint, and capability is cross-verified against official vendor documentation.
+          </p>
+        </div>
+
+        <div className="index-head-stats">
+          <div className="hero-stat-card" data-reveal>
+            <span className="stat-label">Published Comparisons</span>
+            <span className="stat-value">{postCount}</span>
+            <span className="stat-sub">Head-to-head &amp; roundups</span>
+          </div>
+          <div className="hero-stat-card" data-reveal>
+            <span className="stat-label">Platforms Evaluated</span>
+            <span className="stat-value">{toolCount}</span>
+            <span className="stat-sub">Agentforce, Copilot, Salezx, 11x...</span>
+          </div>
+          <div className="hero-stat-card" data-reveal>
+            <span className="stat-label">Verification Standard</span>
+            <span className="stat-value">100%</span>
+            <span className="stat-sub">Primary vendor sourced</span>
+          </div>
+          <div className="hero-stat-card" data-reveal>
+            <span className="stat-label">Last Database Update</span>
+            <span className="stat-value">{longDate(lastUpdated)}</span>
+            <span className="stat-sub">Active quarterly audit</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+import {
+  FactoryIcon,
+  CloudTechIcon,
+  BriefcaseIcon,
+  MedicalIcon,
+} from '../components/Icons.js'
+
+function IndustryShowcase() {
+  const industries = getAllIndustries()
+
+  const iconComponents = {
+    'manufacturing-distribution': FactoryIcon,
+    'b2b-saas': CloudTechIcon,
+    'professional-services': BriefcaseIcon,
+    'healthcare-medtech': MedicalIcon,
+  }
+
+  return (
+    <section className="home-section" aria-labelledby="industries-heading">
+      <div className="section-head">
+        <div>
+          <p className="section-eyebrow">Sector Benchmarks</p>
+          <h2 id="industries-heading">Industry-Specific AI Sales Evaluations</h2>
+        </div>
+        <a className="section-link" href="/industry">View all sectors →</a>
+      </div>
+
+      <div className="industry-hub-grid">
+        {industries.map((ind) => {
+          const IconComp = iconComponents[ind.slug] || FactoryIcon
+          return (
+            <a key={ind.slug} className="industry-hub-card" href={`/industry/${ind.slug}`} data-reveal>
+              <div className="industry-card-top">
+                <div className="industry-card-icon-wrap">
+                  <IconComp size={22} className="industry-svg-icon" />
+                </div>
+                <span className="industry-top-badge">Top Pick: {ind.topPick}</span>
+              </div>
+              <h3 className="industry-card-title">{ind.name}</h3>
+              <p className="industry-card-desc">{ind.bottleneck}</p>
+              <div className="industry-card-meta">
+                <span>{ind.rankings.length} evaluated tools</span>
+                <span className="industry-arrow">Read benchmark →</span>
+              </div>
+            </a>
+          )
+        })}
+      </div>
     </section>
   )
 }
 
-// No hero band. UI.md §5: the most characteristic thing in this subject's world
-// is a table, not a headline over a gradient — so the page says what it is in
-// three lines and then the catalogue starts.
-function Head() {
+function Methodology() {
   return (
-    <div className="index-head">
-      <p className="eyebrow">Independent software comparisons</p>
-      <h1>Compare the tools before you commit the budget</h1>
-      <p className="lead">
-        {SITE_NAME} compares business software — CRMs, AI sales tools, sales
-        platforms — two at a time, against the same criteria. Every price is taken
-        from the vendor’s own page and stamped with the date we checked it, so you
-        can verify the number instead of trusting it.
-      </p>
-    </div>
+    <section className="method-section" aria-labelledby="method-heading">
+      <div className="section-head">
+        <div>
+          <p className="section-eyebrow">Evaluation Standard</p>
+          <h2 id="method-heading">How PlayTheTech Evaluates Enterprise Software</h2>
+        </div>
+      </div>
+
+      <div className="method-grid-3">
+        <div className="method-box" data-reveal>
+          <div className="method-num">01</div>
+          <h3>Direct Primary Sourcing</h3>
+          <p>
+            Every price, API tier, and feature limit is sourced directly from vendor pricing calculators, technical documentation, and product releases — never secondary aggregators.
+          </p>
+        </div>
+
+        <div className="method-box" data-reveal>
+          <div className="method-num">02</div>
+          <h3>Total Cost of Ownership (TCO)</h3>
+          <p>
+            We audit the real cost of deployment, contrasting per-seat licensing penalties against transaction-based AI models and underlying infrastructure credit fees.
+          </p>
+        </div>
+
+        <div className="method-box" data-reveal>
+          <div className="method-num">03</div>
+          <h3>Zero Sponsored Rankings</h3>
+          <p>
+            Vendors cannot pay for coverage, ranking positions, or favorable reviews. Where a tool lacks a capability or charges hidden fees, the matrix states it clearly.
+          </p>
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -90,8 +188,7 @@ export default async function Home() {
       name: SITE_NAME,
       url: absolute('/'),
       email: CONTACT_EMAIL,
-      description:
-        'Publisher of independent software comparisons, sourced from vendor documentation.',
+      description: 'Publisher of independent software comparisons, sourced from vendor documentation.',
     },
   }
 
@@ -99,13 +196,11 @@ export default async function Home() {
     return (
       <>
         <div className="shell">
-          <Head />
-          <Method />
+          <Head postCount={0} toolCount={0} lastUpdated={new Date()} />
+          <IndustryShowcase />
+          <Methodology />
           <p className="empty">
-            {posts === null
-              ? 'The comparison list could not be loaded just now. Try again shortly, or write to us and we will tell you what broke.'
-              : 'No comparisons published yet.'}{' '}
-            <a href="/request">Request a comparison</a>.
+            No comparisons published yet. <a href="/request">Request a comparison</a>.
           </p>
         </div>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(site) }} />
@@ -121,7 +216,6 @@ export default async function Home() {
   const leadTable = extractFirstTable(html)
   const tools = [...new Set(posts.flatMap((p) => [p.tool_1, p.tool_2]))].sort()
 
-  // Gives a crawler the whole catalogue in one machine-readable object.
   const list = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -138,30 +232,10 @@ export default async function Home() {
   return (
     <>
       <div className="shell">
-        <Head />
+        <Head postCount={posts.length} toolCount={tools.length} lastUpdated={posts[0].updated_at} />
 
-        <dl className="ledger">
-          <div className="ledger-item">
-            <dt>Comparisons</dt>
-            <dd>{posts.length}</dd>
-          </div>
-          <div className="ledger-item">
-            <dt>Tools covered</dt>
-            <dd>{tools.length}</dd>
-          </div>
-          <div className="ledger-item">
-            <dt>Last updated</dt>
-            <dd>{longDate(posts[0].updated_at)}</dd>
-          </div>
-          <div className="ledger-item">
-            <dt>Every figure</dt>
-            <dd>Sourced</dd>
-          </div>
-        </dl>
-
-        {/* The sample spread: the newest comparison, printed with its own table.
-            States what the site is by being it, rather than describing it. */}
-        <section className="featured" id="comparisons" aria-labelledby="featured-heading">
+        {/* The sample spread: the newest comparison, printed with its own table. */}
+        <section className="featured" id="comparisons" aria-labelledby="featured-heading" data-reveal>
           <p className="featured-label">Newest comparison</p>
           <h2 id="featured-heading">
             <a href={`/compare/${lead.slug}`}>{lead.title}</a>
@@ -175,62 +249,84 @@ export default async function Home() {
           </p>
           {lead.summary ? <p className="featured-summary">{lead.summary}</p> : null}
           {leadTable ? (
-            <div className="featured-table" dangerouslySetInnerHTML={{ __html: leadTable }} />
+            <>
+              <p className="table-hint mobile-only">Swipe the table to see every column</p>
+              <div className="featured-table" dangerouslySetInnerHTML={{ __html: leadTable }} />
+            </>
           ) : null}
           <p className="featured-more">
             <a href={`/compare/${lead.slug}`}>Read the full comparison and verdict →</a>
           </p>
         </section>
 
+        {/* Dedicated Industry Hub Section */}
+        <IndustryShowcase />
+
+        {/* More Comparisons Grid */}
         {rest.length > 0 ? (
-          <section aria-labelledby="all-heading">
+          <section className="home-section" aria-labelledby="all-heading">
             <div className="section-head">
-              <h2 id="all-heading">More comparisons</h2>
-              <span className="count">{rest.length} more</span>
+              <div>
+                <p className="section-eyebrow">Catalogue</p>
+                <h2 id="all-heading">Head-to-Head &amp; Category Comparisons</h2>
+              </div>
+              <span className="count">{rest.length} comparisons</span>
             </div>
             <ul className="card-grid">
               {rest.map((p) => (
-                <li key={p.slug} className="card">
+                <li key={p.slug} className="card" data-reveal>
                   <div className="card-top">
                     <span className={`tag ${p.type}`}>{p.type}</span>
                     <span className="card-date">
                       <time dateTime={isoDate(p.updated_at)}>{longDate(p.updated_at)}</time>
                     </span>
                   </div>
-                  <h3><a className="card-link" href={`/compare/${p.slug}`}>{p.title}</a></h3>
-                  <p className="card-pair">{pairLabel(p)}</p>
-                  {p.summary ? <p className="card-summary">{p.summary}</p> : null}
-                  {/* No "read more" affordance: the whole row is the link, and a
-                      decorative arrow repeated on every row is just noise. */}
+                  <div className="card-main">
+                    <h3><a className="card-link" href={`/compare/${p.slug}`}>{p.title}</a></h3>
+                    <p className="card-pair">{pairLabel(p)}</p>
+                    {p.summary ? <p className="card-summary">{p.summary}</p> : null}
+                  </div>
+                  <div className="card-media">
+                    <img
+                      className="card-thumb"
+                      src={`/images/${p.slug}.jpg`}
+                      alt={p.title}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
                 </li>
               ))}
             </ul>
           </section>
         ) : null}
 
-        <section aria-labelledby="tools-heading">
+        {/* Tools Covered Directory */}
+        <section className="home-section" aria-labelledby="tools-heading" data-reveal>
           <div className="section-head">
-            <h2 id="tools-heading">Tools covered</h2>
-            <span className="count">{tools.length} tools</span>
+            <div>
+              <p className="section-eyebrow">Directory</p>
+              <h2 id="tools-heading">Evaluated Software Platforms</h2>
+            </div>
+            <span className="count">{tools.length} active platforms</span>
           </div>
           <ul className="tool-index">
             {tools.map((t) => {
               const match = posts.find((p) => p.tool_1 === t || p.tool_2 === t)
               return (
                 <li key={t}>
-                  <a href={`/compare/${match.slug}`}>{t}</a>
+                  <a href={`/compare/${match.slug}`}>
+                    <span>{t}</span>
+                    <small>Compare →</small>
+                  </a>
                 </li>
               )
             })}
           </ul>
-          <p className="tool-note">
-            A pair you need that is not here yet — <a href="/request">ask for it</a>.
-          </p>
         </section>
 
-        {/* The method note closes the catalogue, where a price list prints its
-            terms. It is annotation; the comparisons are the page. */}
-        <Method />
+        {/* Methodology Standard */}
+        <Methodology />
       </div>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(site) }} />

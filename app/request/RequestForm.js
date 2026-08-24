@@ -2,8 +2,6 @@
 
 import { useState } from 'react'
 
-// A client component, and only here: /request is noindex and carries no content
-// a crawler needs. Post pages stay server-only. R7.2.
 export default function RequestForm() {
   const [state, setState] = useState('idle')
   const [errors, setErrors] = useState([])
@@ -35,62 +33,104 @@ export default function RequestForm() {
 
   if (state === 'sent') {
     return (
-      <div className="notice good" role="status">
-        <p>
-          Got it. Requests are read weekly and worked into the schedule by how often the
-          same pair comes up. If you left an email address, you will hear from us when
-          the comparison is published.
-        </p>
+      <div className="notice good request-success-card" role="status">
+        <div className="notice-icon">✓</div>
+        <div>
+          <h3>Comparison Request Received</h3>
+          <p>
+            Requests are reviewed weekly by our editorial team and prioritized by how often the same pair is requested. If you provided an email, we'll notify you as soon as the benchmark is published.
+          </p>
+        </div>
       </div>
     )
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate>
+    <form className="request-form-body" onSubmit={onSubmit} noValidate>
       {errors.length > 0 && (
         <div className="notice bad" role="alert">
           {errors.map((msg) => <p key={msg}>{msg}</p>)}
         </div>
       )}
 
-      <div className="row">
+      <div className="form-grid-2">
         <div className="field">
-          <label htmlFor="tool_1">First tool <span className="req">required</span></label>
-          <input id="tool_1" name="tool_1" type="text" required maxLength={120} autoComplete="off" />
+          <label htmlFor="tool_1">
+            First Platform / Tool <span className="req-pill">Required</span>
+          </label>
+          <input
+            id="tool_1"
+            name="tool_1"
+            type="text"
+            required
+            maxLength={120}
+            autoComplete="off"
+            placeholder="e.g. Salesforce Agentforce"
+          />
         </div>
         <div className="field">
-          <label htmlFor="tool_2">Second tool <span className="req">required</span></label>
-          <input id="tool_2" name="tool_2" type="text" required maxLength={120} autoComplete="off" />
+          <label htmlFor="tool_2">
+            Second Platform / Tool <span className="req-pill">Required</span>
+          </label>
+          <input
+            id="tool_2"
+            name="tool_2"
+            type="text"
+            required
+            maxLength={120}
+            autoComplete="off"
+            placeholder="e.g. Salezx or MS Copilot"
+          />
         </div>
       </div>
 
       <div className="field">
-        <label htmlFor="industry">Industry</label>
-        <input id="industry" name="industry" type="text" maxLength={120} autoComplete="off" />
-        <span className="hint">Building materials, machinery dealing, wholesale distribution — whatever you would call it.</span>
+        <label htmlFor="industry">Industry / Business Sector</label>
+        <input
+          id="industry"
+          name="industry"
+          type="text"
+          maxLength={120}
+          autoComplete="off"
+          placeholder="e.g. Manufacturing, B2B SaaS, Professional Services, Healthcare..."
+        />
+        <span className="hint">Helps us evaluate against sector-specific ERP, compliance, and quoting requirements.</span>
       </div>
 
       <div className="field">
-        <label htmlFor="note">What does the decision hinge on?</label>
-        <textarea id="note" name="note" rows={5} maxLength={2000} />
-        <span className="hint">The constraint that rules a tool out. Budget ceiling, offline use, an ERP it has to talk to.</span>
+        <label htmlFor="note">What does your decision hinge on?</label>
+        <textarea
+          id="note"
+          name="note"
+          rows={4}
+          maxLength={2000}
+          placeholder="e.g. We need native SAP S/4HANA connectivity, multi-tiered price book calculation, or unlimited seat licensing without per-seat add-on fees."
+        />
+        <span className="hint">Tell us your core constraint: budget ceiling, offline use, live ERP sync, CRM stack, etc.</span>
       </div>
 
       <div className="field">
-        <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" maxLength={200} autoComplete="email" />
-        <span className="hint">Optional, and only used to tell you when this comparison is published.</span>
+        <label htmlFor="email">Work Email Address</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          maxLength={200}
+          autoComplete="email"
+          placeholder="name@company.com"
+        />
+        <span className="hint">Optional. We will only email you a link when this comparison is published. Zero marketing spam.</span>
       </div>
 
-      {/* Left in the DOM for bots, hidden from people and screen readers. */}
+      {/* Honeypot field for spam bots */}
       <div className="vh" aria-hidden="true">
         <label htmlFor="company">Company</label>
         <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <div className="actions">
-        <button type="submit" disabled={state === 'sending'}>
-          {state === 'sending' ? 'Sending…' : 'Send request'}
+      <div className="form-actions-wrap">
+        <button className="submit-btn" type="submit" disabled={state === 'sending'}>
+          {state === 'sending' ? 'Submitting Request…' : 'Submit Comparison Request →'}
         </button>
       </div>
     </form>

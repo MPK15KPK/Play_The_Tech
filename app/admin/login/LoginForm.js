@@ -23,16 +23,21 @@ export default function LoginForm() {
       const res = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: form.get('email'), password: form.get('password') }),
+        body: JSON.stringify({
+          email: form.get('email'),
+          password: form.get('password'),
+        }),
       })
+
       const json = await res.json().catch(() => ({}))
       if (!res.ok) {
         setError(json.error || 'Email or password is incorrect.')
         setBusy(false)
         return
       }
-      router.replace(next)
-      router.refresh()
+
+      // Hard redirect ensures session cookie is fully attached on subsequent server render
+      window.location.href = next
     } catch {
       setError('Could not reach the server. Try again.')
       setBusy(false)
@@ -40,7 +45,7 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form className="auth-form" onSubmit={onSubmit}>
       {error && (
         <div className="notice bad" role="alert">
           <p>{error}</p>
@@ -48,17 +53,35 @@ export default function LoginForm() {
       )}
 
       <div className="field">
-        <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" required autoComplete="username" />
+        <label htmlFor="email">Work Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          autoComplete="username"
+          placeholder="editor@playthetech.com"
+          disabled={busy}
+        />
       </div>
 
       <div className="field">
         <label htmlFor="password">Password</label>
-        <input id="password" name="password" type="password" required autoComplete="current-password" />
+        <input
+          id="password"
+          name="password"
+          type="password"
+          required
+          autoComplete="current-password"
+          placeholder="••••••••••••"
+          disabled={busy}
+        />
       </div>
 
-      <div className="actions">
-        <button type="submit" disabled={busy}>{busy ? 'Checking…' : 'Sign in'}</button>
+      <div className="form-actions-wrap">
+        <button type="submit" className="submit-btn" disabled={busy}>
+          {busy ? 'Authenticating…' : 'Sign in to Dashboard →'}
+        </button>
       </div>
     </form>
   )

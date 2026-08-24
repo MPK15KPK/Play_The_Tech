@@ -17,20 +17,19 @@ export default async function SettingsPage() {
   return (
     <div className="shell admin-shell">
       <div className="admin-bar">
-        <a href="/admin">← Admin</a>
+        <a className="button secondary" href="/admin">← Back to Dashboard</a>
         <span className="spacer" />
-        <span>Sign-in settings</span>
+        <span className="admin-count">Security &amp; Credentials</span>
       </div>
 
-      {/* Two columns, same shape as /request. A 32rem form alone in a
-          full-width shell leaves two thirds of the page empty. */}
       <div className="request-layout">
-        <div className="form-page">
-          <h1>Change how you sign in</h1>
-          <p>
-            These credentials replace the pair in the environment file. You need the
-            current password to change either field.
-          </p>
+        <div className="admin-card">
+          <div className="editor-card-head">
+            <h1>Change Sign-in Credentials</h1>
+            <p className="editor-card-subtitle">
+              These credentials update the database login. You need the current password to save changes.
+            </p>
+          </div>
           <SettingsForm currentEmailValue={email} />
         </div>
 

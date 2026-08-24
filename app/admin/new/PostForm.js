@@ -87,88 +87,106 @@ export default function PostForm({ post }) {
       )}
 
       <div className="field">
-        <label htmlFor="title">Title <span className="req">required</span></label>
+        <label htmlFor="title">
+          Title <span className="req-pill">Required</span>
+        </label>
         <input
           id="title" name="title" type="text" value={form.title}
           onChange={(e) => onTitle(e.target.value)} maxLength={200}
+          placeholder="e.g. HubSpot vs Salesforce for growing sales teams (2026)"
         />
-        <span className="hint">Write the question a buyer types, not a label.</span>
+        <span className="hint">Write the exact comparative query a buyer types, not a short generic label.</span>
       </div>
 
       <div className="row">
         <div className="field">
-          <label htmlFor="slug">Slug <span className="req">required</span></label>
+          <label htmlFor="slug">
+            Slug <span className="req-pill">Required</span>
+          </label>
           <input
             id="slug" name="slug" type="text" value={form.slug}
             onChange={(e) => { setSlugTouched(true); set('slug', e.target.value) }}
             maxLength={120}
+            placeholder="hubspot-vs-salesforce"
           />
-          <span className="hint">/compare/{form.slug || '…'} — lowercase, hyphens, unique.</span>
+          <span className="hint">URL path: /compare/{form.slug || '…'} (lowercase, hyphens, unique).</span>
         </div>
         <div className="field">
-          <label htmlFor="type">Type <span className="req">required</span></label>
+          <label htmlFor="type">
+            Comparison Format <span className="req-pill">Required</span>
+          </label>
           <select id="type" name="type" value={form.type} onChange={(e) => set('type', e.target.value)}>
-            <option value="comparison">comparison</option>
-            <option value="roundup">roundup</option>
+            <option value="comparison">Head-to-Head Comparison (2 tools)</option>
+            <option value="roundup">Multi-tool Industry Roundup / Rankings</option>
           </select>
         </div>
       </div>
 
       <div className="row">
         <div className="field">
-          <label htmlFor="tool_1">Tool 1 <span className="req">required</span></label>
-          <input id="tool_1" type="text" value={form.tool_1} onChange={(e) => set('tool_1', e.target.value)} maxLength={120} />
+          <label htmlFor="tool_1">
+            Tool 1 Name <span className="req-pill">Required</span>
+          </label>
+          <input id="tool_1" type="text" value={form.tool_1} onChange={(e) => set('tool_1', e.target.value)} maxLength={120} placeholder="e.g. HubSpot Sales Hub" />
         </div>
         <div className="field">
-          <label htmlFor="tool_2">Tool 2 <span className="req">required</span></label>
-          <input id="tool_2" type="text" value={form.tool_2} onChange={(e) => set('tool_2', e.target.value)} maxLength={120} />
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="field">
-          <label htmlFor="website_1">Website 1</label>
-          <input id="website_1" type="text" value={form.website_1 || ''} onChange={(e) => set('website_1', e.target.value)} maxLength={200} />
-          <span className="hint">Domain only, e.g. notion.so</span>
-        </div>
-        <div className="field">
-          <label htmlFor="website_2">Website 2</label>
-          <input id="website_2" type="text" value={form.website_2 || ''} onChange={(e) => set('website_2', e.target.value)} maxLength={200} />
+          <label htmlFor="tool_2">
+            Tool 2 Name <span className="req-pill">Required</span>
+          </label>
+          <input id="tool_2" type="text" value={form.tool_2} onChange={(e) => set('tool_2', e.target.value)} maxLength={120} placeholder="e.g. Salesforce Sales Cloud" />
         </div>
       </div>
 
       <div className="row">
         <div className="field">
-          <label htmlFor="link_1">Link 1 <span className="req">required</span></label>
-          <input id="link_1" type="url" value={form.link_1 || ''} onChange={(e) => set('link_1', e.target.value)} maxLength={500} />
-          <span className="hint">The vendor page the tool 1 facts came from. Becomes source [^1].</span>
+          <label htmlFor="website_1">Tool 1 Domain</label>
+          <input id="website_1" type="text" value={form.website_1 || ''} onChange={(e) => set('website_1', e.target.value)} maxLength={200} placeholder="hubspot.com" />
+          <span className="hint">Domain only without https://</span>
         </div>
         <div className="field">
-          <label htmlFor="link_2">Link 2 <span className="req">required</span></label>
-          <input id="link_2" type="url" value={form.link_2 || ''} onChange={(e) => set('link_2', e.target.value)} maxLength={500} />
-          <span className="hint">Source [^2]. Never another comparison site.</span>
+          <label htmlFor="website_2">Tool 2 Domain</label>
+          <input id="website_2" type="text" value={form.website_2 || ''} onChange={(e) => set('website_2', e.target.value)} maxLength={200} placeholder="salesforce.com" />
+          <span className="hint">Domain only without https://</span>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="field">
+          <label htmlFor="link_1">
+            Primary Source 1 <span className="req-pill">Required</span>
+          </label>
+          <input id="link_1" type="url" value={form.link_1 || ''} onChange={(e) => set('link_1', e.target.value)} maxLength={500} placeholder="https://www.hubspot.com/pricing/sales" />
+          <span className="hint">Direct vendor pricing/docs page. Powers source mark [^1].</span>
+        </div>
+        <div className="field">
+          <label htmlFor="link_2">
+            Primary Source 2 <span className="req-pill">Required</span>
+          </label>
+          <input id="link_2" type="url" value={form.link_2 || ''} onChange={(e) => set('link_2', e.target.value)} maxLength={500} placeholder="https://www.salesforce.com/editions-pricing/sales-cloud" />
+          <span className="hint">Direct vendor pricing/docs page. Powers source mark [^2].</span>
         </div>
       </div>
 
       <div className="field">
         <label htmlFor="summary">
-          Summary <span className="req">required</span>
+          Executive Summary <span className="req-pill">Required</span>
           {' — '}
-          <span style={{ color: summaryOk ? 'var(--mark)' : 'var(--flag)' }}>
-            {words} words
+          <span style={{ color: summaryOk ? '#059669' : '#DC2626', fontWeight: 700 }}>
+            {words} words {summaryOk ? '✓' : '(aim for 40–60 words)'}
           </span>
         </label>
-        <textarea id="summary" rows={4} value={form.summary || ''} onChange={(e) => set('summary', e.target.value)} maxLength={1200} />
+        <textarea id="summary" rows={4} value={form.summary || ''} onChange={(e) => set('summary', e.target.value)} maxLength={1200} placeholder="Provide a concise 2-sentence verdict directly answering which tool wins for what specific scenario..." />
         <span className="hint">
-          40–60 words, enforced at 20–80. Answer the question outright in the first
-          sentence — this is the passage most likely to be lifted into an AI answer.
+          40–60 words (enforced 20–80). State the fundamental difference immediately in sentence one.
         </span>
       </div>
 
       <div className="field">
-        <label htmlFor="content">Content <span className="req">required</span></label>
+        <label htmlFor="content">
+          Markdown Benchmark Body &amp; Matrix <span className="req-pill">Required</span>
+        </label>
         <textarea
-          id="content" className="code" rows={26}
+          id="content" className="code" rows={24}
           ref={contentRef}
           value={form.content || ''}
           onChange={(e) => set('content', e.target.value)}
@@ -178,46 +196,43 @@ export default function PostForm({ post }) {
           textareaRef={contentRef}
           onInsert={(full, append) => set('content', full ?? `${form.content || ''}${append}`)}
         />
-        <span className="hint">
-          Markdown. <strong>Start with the comparison table</strong> — the page prints
-          the &ldquo;How do X and Y compare?&rdquo; heading directly above whatever comes
-          first here.
-        </span>
-        <span className="hint">
-          In a table cell: <code>▸</code> at the start marks the winning cell,{' '}
-          <code>§</code> at the start of the first cell begins a new row group, and{' '}
-          <code>Not published</code> is how a missing figure is written — never blank,
-          never an em-dash. <code>[^1]</code> and <code>[^2]</code> anywhere become
-          superscript source marks pointing at Link 1 and Link 2.
-        </span>
-        <span className="hint">
-          Optional front matter at the very top feeds the verification stamp under the
-          table: <code>---</code> / <code>verified: 2026-08-12</code> /{' '}
-          <code>method: documentation</code> / <code>criteria: ops-v1</code> /{' '}
-          <code>---</code>. Leave <code>method</code> out unless the tool was actually
-          used.
-        </span>
+        <div className="editor-tips-box">
+          <strong>Markdown Matrix Syntax Guide:</strong>
+          <ul>
+            <li><code>▸</code> at the start of a cell marks the category winner.</li>
+            <li><code>§</code> at the start of the first cell begins a new group header.</li>
+            <li><code>Not published</code> is the standard for unlisted pricing — never leave blank.</li>
+            <li><code>[^1]</code> and <code>[^2]</code> automatically link to verified Source Links 1 &amp; 2.</li>
+          </ul>
+        </div>
       </div>
 
-      <div className="field">
-        <label htmlFor="author">Author <span className="req">required</span></label>
-        <input id="author" type="text" value={form.author || ''} onChange={(e) => set('author', e.target.value)} maxLength={120} />
-        <span className="hint">A real person&rsquo;s name. Not &ldquo;Editorial team&rdquo;.</span>
-      </div>
+      <div className="row">
+        <div className="field">
+          <label htmlFor="author">
+            Author / Analyst <span className="req-pill">Required</span>
+          </label>
+          <input id="author" type="text" value={form.author || ''} onChange={(e) => set('author', e.target.value)} maxLength={120} placeholder="e.g. Editorial Analyst Team" />
+          <span className="hint">Author attribution for editorial transparency.</span>
+        </div>
 
-      <div className="field checkbox">
-        <input
-          id="published" type="checkbox" checked={Boolean(form.published)}
-          onChange={(e) => set('published', e.target.checked)}
-        />
-        <label htmlFor="published">
-          Published — a human has read this and it names a genuine difference
-        </label>
+        <div className="field checkbox-field">
+          <label htmlFor="published" className="checkbox-label">
+            <input
+              id="published" type="checkbox" checked={Boolean(form.published)}
+              onChange={(e) => set('published', e.target.checked)}
+            />
+            <span>
+              <strong>Publish Live to Index</strong>
+              <small>Verified by human editor and matches live vendor pricing.</small>
+            </span>
+          </label>
+        </div>
       </div>
 
       <div className="actions">
-        <button type="submit" disabled={state === 'saving'}>
-          {state === 'saving' ? 'Saving…' : post ? 'Save changes' : 'Create post'}
+        <button type="submit" className="button" disabled={state === 'saving'}>
+          {state === 'saving' ? 'Saving…' : post ? 'Save Changes →' : 'Publish Comparison →'}
         </button>
         <a className="button secondary" href="/admin">Cancel</a>
       </div>

@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og'
-import { one, POSTS } from '../../../lib/db.js'
+import { getIndustry } from '../../../lib/industries.js'
 
 export const runtime = 'nodejs'
 export const size = { width: 1200, height: 630 }
@@ -7,21 +7,11 @@ export const contentType = 'image/png'
 
 export default async function Image({ params }) {
   const { slug } = await params
-  let post = null
-  try {
-    post = await one(
-      `SELECT title, type, tool_1, tool_2, summary, updated_at
-         FROM ${POSTS}
-        WHERE slug = $1 AND published = TRUE`,
-      [slug]
-    )
-  } catch {}
+  const ind = getIndustry(slug)
 
-  const title = post?.title || 'B2B Software & AI Sales Agent Comparison'
-  const tools = post?.type === 'roundup'
-    ? 'Salesforce · Microsoft Copilot · Salezx · 11x'
-    : `${post?.tool_1 || 'Tool 1'} vs ${post?.tool_2 || 'Tool 2'}`
-  const typeLabel = post?.type === 'roundup' ? 'Benchmark Roundup' : 'Head-to-Head Comparison'
+  const title = ind?.title || 'Industry AI Sales Benchmark 2026'
+  const sector = ind?.name || 'Enterprise Sector'
+  const topPick = ind?.topPick || 'Top Evaluated Platform'
 
   return new ImageResponse(
     (
@@ -74,17 +64,17 @@ export default async function Image({ params }) {
               textTransform: 'uppercase',
             }}
           >
-            {typeLabel}
+            Sector Benchmark 2026
           </div>
         </div>
 
-        {/* Post title and tools */}
+        {/* Industry Title and Top Pick */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '18px', maxWidth: '1000px' }}>
           <div
             style={{
-              fontSize: title.length > 50 ? '48px' : '56px',
+              fontSize: title.length > 50 ? '46px' : '54px',
               fontWeight: '800',
-              lineHeight: '1.18',
+              lineHeight: '1.2',
               letterSpacing: '-0.02em',
               color: '#FFFFFF',
             }}
@@ -95,13 +85,20 @@ export default async function Image({ params }) {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
+              gap: '24px',
               fontSize: '22px',
               color: '#94A3B8',
             }}
           >
-            <span style={{ color: '#38BDF8', fontWeight: '600' }}>Evaluating:</span>
-            <span>{tools}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ color: '#38BDF8', fontWeight: '700' }}>Top Pick:</span>
+              <span style={{ color: '#FFFFFF', fontWeight: '700' }}>{topPick}</span>
+            </div>
+            <span>•</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ color: '#38BDF8', fontWeight: '700' }}>Sector:</span>
+              <span>{sector}</span>
+            </div>
           </div>
         </div>
 
@@ -117,7 +114,7 @@ export default async function Image({ params }) {
         >
           <div style={{ display: 'flex', gap: '40px', fontSize: '18px', color: '#94A3B8' }}>
             <span>✓ Verified against vendor documentation</span>
-            <span>✓ Zero sponsored placements</span>
+            <span>✓ Zero sponsored ranking bias</span>
           </div>
           <div style={{ color: '#38BDF8', fontSize: '20px', fontWeight: '700' }}>
             playthetech.com

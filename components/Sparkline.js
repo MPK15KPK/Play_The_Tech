@@ -67,7 +67,7 @@ export function Sparkline({ series, width = 96, height = 24, label }) {
  * The site-wide chart. Uniques nest inside the total because every unique is
  * also a view — a part of a whole, not a second series racing the first.
  */
-export function DayChart({ series, height = 168 }) {
+export function DayChart({ series, height = 130 }) {
   if (!series.length) return null
 
   const rows = series.map((d) => ({

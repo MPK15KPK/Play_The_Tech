@@ -1,22 +1,23 @@
-import { Geist, Geist_Mono } from 'next/font/google'
-import Logo from '../components/Logo.js'
+import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { SITE_NAME, SITE_DESCRIPTION, CONTACT_EMAIL, siteUrl } from '../lib/site.js'
+import Header from '../components/Header.js'
+import Motion from '../components/Motion.js'
+import { INDUSTRIES, COMPARISONS } from '../components/nav-data.js'
 
-// Geist for the whole interface. It is a contemporary grotesque drawn for
-// product UI — high x-height, unfussy at 13px, and not Inter. Geist Mono
-// carries every price, date and figure, so numbers still line up in a column.
-const sans = Geist({
+// Plus Jakarta Sans: warm, refined, human and legible modern typography.
+// JetBrains Mono: clean, modern monospace for code tokens and technical data.
+const sans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
-  variable: '--geist-sans',
+  variable: '--font-sans',
 })
-const mono = Geist_Mono({
+const mono = JetBrains_Mono({
   subsets: ['latin'],
-  weight: ['400', '500'],
+  weight: ['400', '500', '600'],
   display: 'swap',
-  variable: '--geist-mono',
+  variable: '--font-mono',
 })
 
 export const metadata = {
@@ -27,58 +28,75 @@ export const metadata = {
   robots: { index: true, follow: true },
 }
 
-export const viewport = { themeColor: '#0B1220' }
+export const viewport = {
+  themeColor: '#FFFFFF',
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+}
 
 export default function RootLayout({ children }) {
   const cls = `${sans.variable} ${mono.variable}`
+  const year = new Date().getFullYear()
+
   return (
     <html lang="en" className={cls}>
       <body>
         <a className="skip-link" href="#main">Skip to content</a>
 
-        <header className="site-header">
-          <div className="shell">
-            <div className="masthead">
-              <a className="wordmark" href="/" aria-label="playthetech, home">
-                <Logo />
-              </a>
-              <p className="masthead-note">
-                Prices and limits come from vendor documentation, with the date we
-                checked them printed on every table.
-              </p>
-            </div>
-            {/* Real hrefs, server-rendered. Nothing here links to /admin. */}
-            <nav className="site-nav" aria-label="Sections">
-              <a href="/">Comparisons</a>
-              <a className="cta" href="/request">Request a comparison</a>
-            </nav>
-          </div>
-        </header>
+        <Header />
+        <Motion />
 
         {/* Pages supply their own .shell so a band can run full width when one is needed. */}
-        <main id="main">{children}</main>
+        <main id="main" className="page-enter">{children}</main>
 
         <footer className="site-footer">
-          <div className="shell">
-            <p>
-              <strong>Sourcing</strong> Prices, limits, and features come from vendor
-              pricing pages, vendor documentation, or the product itself — never from
-              other comparison sites. Where a vendor does not publish a figure, the
-              table says so rather than estimating.
-            </p>
-            <p>
-              <strong>Contact</strong> Corrections and comparison requests go to{' '}
-              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>, and are read by
-              the person who wrote the page.
-            </p>
-            {/* GUARDRAILS R1: the independence and ownership statement is site-wide
-                furniture, not per-post. Shared ownership with a tool under review
-                is disclosed above that post's table as well. */}
-            <p>
-              <strong>Independence</strong> No relation to Playtech plc. We take no
-              payment from vendors for coverage or ranking position, and vendors do not
-              review posts before publication.
-            </p>
+          <div className="shell footer-grid">
+            <div className="footer-col footer-col-wide">
+              <p className="footer-brand">playthetech<span>.</span></p>
+              <p>
+                Independent B2B software and AI sales agent comparisons. Prices,
+                limits, and features come from vendor pricing pages, vendor
+                documentation, or the product itself — never from other comparison
+                sites. Where a vendor does not publish a figure, the table says so
+                rather than estimating.
+              </p>
+            </div>
+
+            <div className="footer-nav-group">
+              <nav className="footer-col" aria-label="Industry guides">
+                <strong>Industry guides</strong>
+                <ul>
+                  {INDUSTRIES.map((ind) => (
+                    <li key={ind.href}><a href={ind.href}>{ind.name}</a></li>
+                  ))}
+                </ul>
+              </nav>
+
+              <nav className="footer-col" aria-label="Comparisons">
+                <strong>Comparisons</strong>
+                <ul>
+                  {COMPARISONS.map((c) => (
+                    <li key={c.href}><a href={c.href}>{c.name}</a></li>
+                  ))}
+                  <li><a href="/request">Request a comparison</a></li>
+                </ul>
+              </nav>
+            </div>
+
+            <div className="footer-col footer-contact-box">
+              <strong>Contact &amp; Inquiries</strong>
+              <p>
+                Corrections and comparison requests go to{' '}
+                <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>, and are read
+                by the editorial team.
+              </p>
+            </div>
+          </div>
+
+          <div className="shell footer-base">
+            <span>© {year} {SITE_NAME}</span>
+            <span>{SITE_DESCRIPTION}</span>
           </div>
         </footer>
       </body>

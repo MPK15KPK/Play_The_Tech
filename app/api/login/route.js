@@ -13,9 +13,9 @@ const GENERIC = 'Email or password is incorrect.'
 export async function POST(req) {
   const ip = clientIp(req)
 
-  // Without this the password is brute-forceable and nothing else guards the
-  // door. R7.4.
-  const limit = rateLimit(`login:${ip}`, 5, 60_000)
+  // Rate limit protection against brute force
+  const maxAttempts = process.env.NODE_ENV === 'development' ? 30 : 15
+  const limit = rateLimit(`login:${ip}`, maxAttempts, 60_000)
   if (!limit.ok) {
     return Response.json(
       { error: 'Too many attempts. Wait a minute and try again.' },

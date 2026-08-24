@@ -136,10 +136,15 @@ h4 { font-size: var(--step-1); font-weight: 600; letter-spacing: -0.01em; }
 
 p { margin: 0 0 var(--space-3); }
 
-a { color: var(--link); text-decoration: none; }
+a { color: var(--link); text-decoration: none; -webkit-tap-highlight-color: transparent; }
 a:hover { text-decoration: underline; text-underline-offset: 2px; }
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+[tabindex]:focus:not(:focus-visible) {
+  outline: none !important;
+}
 
-:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: var(--radius-sm); }
+:focus-visible { outline: 2px solid #3B82F6; outline-offset: 2px; border-radius: var(--radius-sm); }
 
 code, kbd, samp { font-family: var(--font-data); font-size: 0.9em; }
 hr { border: 0; border-top: var(--rule-hair) solid var(--rule); margin: var(--space-5) 0; }
@@ -782,7 +787,8 @@ time { font-variant-numeric: tabular-nums; }
   transition: background var(--dur) var(--ease);
 }
 .card:hover { background: var(--surface); }
-.card:focus-within { outline: 2px solid var(--mark); outline-offset: -2px; }
+.card:focus-within, .card:focus, .card:active { outline: none !important; }
+.card a, .card a:focus, .card a:active { outline: none !important; -webkit-tap-highlight-color: transparent !important; }
 
 .card-top { grid-column: 1; align-self: start; }
 .card-main { grid-column: 2; min-width: 0; }
@@ -3148,7 +3154,18 @@ body:has(.admin-shell) .site-footer .footer-base {
 }
 
 html { scroll-behavior: smooth; }
-body { -webkit-tap-highlight-color: rgba(27, 95, 232, 0.12); }
+body { -webkit-tap-highlight-color: transparent !important; }
+
+.card, .industry-hub-card, .method-box, .hero-stat-card, .featured,
+.card a, .industry-hub-card a, .featured a,
+.post-layout, .rank-card {
+  -webkit-tap-highlight-color: transparent !important;
+}
+.card:focus, .card:active,
+.industry-hub-card:focus, .industry-hub-card:active,
+.featured:focus, .featured:active {
+  outline: none !important;
+}
 
 /* Which tier a block belongs to. Written as two hide rules rather than a
    hide/show pair, so a shown element keeps whatever display it declared —
@@ -3825,8 +3842,17 @@ body { -webkit-tap-highlight-color: rgba(27, 95, 232, 0.12); }
     gap: 9px;
     padding: 14px 0;
     border-radius: 0;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
-  .card:hover { background: transparent; }
+  .card:hover, .card:focus, .card:active, .card:focus-within {
+    background: transparent !important;
+    outline: none !important;
+  }
+  .card a, .card a:focus, .card a:active {
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
   .card-media { order: -1; width: 100%; margin: 0; }
   .card-thumb {
     width: 100%;
@@ -3835,6 +3861,7 @@ body { -webkit-tap-highlight-color: rgba(27, 95, 232, 0.12); }
     max-height: 190px;
     object-fit: cover;
     border-radius: var(--radius-sm);
+    outline: none !important;
   }
   .card:hover .card-thumb { transform: none; }
   .card-top {

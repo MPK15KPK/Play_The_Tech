@@ -6,6 +6,7 @@ import { getAllIndustries } from '../lib/industries.js'
 
 export const dynamic = 'force-dynamic'
 
+
 export const metadata = {
   title: `${SITE_NAME} — Independent B2B Software & AI Sales Agent Comparisons`,
   description: `${SITE_DESCRIPTION} Verified pricing, architecture benchmarks, and per-industry evaluations.`,

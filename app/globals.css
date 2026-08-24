@@ -2460,28 +2460,155 @@ table.list td .np { white-space: nowrap; color: #94A3B8; font-size: 0.75rem; }
 .filter-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 var(--space-4);
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 20px;
 }
 .filter-row a {
-  padding: 5px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 6px 16px;
   font-size: 0.8125rem;
   font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
   color: #475569;
-  background: #FFFFFF;
-  border: 1px solid var(--rule-2);
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
   border-radius: 999px;
   text-decoration: none;
   transition: all var(--dur-1) var(--ease);
 }
 .filter-row a:hover {
-  background: #F1F5F9;
-  color: var(--brand-900);
+  background: #EFF6FF;
+  border-color: #93C5FD;
+  color: #1E40AF;
 }
 .filter-row a[aria-current="page"] {
-  background: var(--brand-900);
-  border-color: var(--brand-900);
+  background: #0F172A;
+  border-color: #0F172A;
   color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+}
+
+/* --------------------------------- Custom Status Control Dropdown */
+.status-control-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.status-badge-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all var(--dur-1) var(--ease);
+  background: #F1F5F9;
+  color: #475569;
+}
+
+.status-badge-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.status-badge-btn.status-new {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+  color: #1D4ED8;
+}
+.status-badge-btn.status-planned {
+  background: #FFFBEB;
+  border-color: #FDE68A;
+  color: #B45309;
+}
+.status-badge-btn.status-done {
+  background: #ECFDF5;
+  border-color: #A7F3D0;
+  color: #047857;
+}
+.status-badge-btn.status-rejected {
+  background: #F8FAFC;
+  border-color: #E2E8F0;
+  color: #64748B;
+}
+
+.status-caret {
+  transition: transform var(--dur-1) var(--ease);
+}
+.status-badge-btn.is-active .status-caret {
+  transform: rotate(180deg);
+}
+
+.status-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 50;
+  min-width: 140px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  animation: popoverFadeIn 120ms var(--ease-out);
+}
+
+@keyframes popoverFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.status-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--dur-1) var(--ease);
+}
+
+.status-dropdown-item:hover {
+  background: #F1F5F9;
+}
+.status-dropdown-item.status-new:hover { background: #EFF6FF; color: #1D4ED8; }
+.status-dropdown-item.status-planned:hover { background: #FFFBEB; color: #B45309; }
+.status-dropdown-item.status-done:hover { background: #ECFDF5; color: #047857; }
+.status-dropdown-item.status-rejected:hover { background: #F8FAFC; color: #64748B; }
+
+.status-dropdown-item.is-selected {
+  font-weight: 700;
+  background: #F8FAFC;
+}
+.status-check {
+  margin-left: auto;
+  stroke: #2563EB;
+}
+.status-failed-msg {
+  display: block;
+  font-size: 0.6875rem;
+  color: #DC2626;
+  margin-top: 4px;
 }
 
 /* The editor is a working surface, not an article — give it the page. */
@@ -4126,6 +4253,13 @@ body { -webkit-tap-highlight-color: rgba(27, 95, 232, 0.12); }
 
   /* ------------------------------------------------------- mobile admin cards */
   .table-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    display: block !important;
+  }
+  .admin-shell .table-wrap {
     border: none !important;
     background: transparent !important;
     box-shadow: none !important;
@@ -4252,17 +4386,18 @@ body { -webkit-tap-highlight-color: rgba(27, 95, 232, 0.12); }
     flex-wrap: nowrap !important;
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
-    gap: 6px !important;
-    padding-bottom: 6px !important;
-    margin-bottom: 12px !important;
+    gap: 8px !important;
+    padding: 4px 2px 10px !important;
+    margin: 10px 0 16px !important;
     scrollbar-width: none;
   }
   .filter-row::-webkit-scrollbar { display: none; }
   .filter-row a {
     white-space: nowrap !important;
     flex-shrink: 0 !important;
-    padding: 5px 12px !important;
-    font-size: 0.75rem !important;
+    min-height: 32px !important;
+    padding: 6px 14px !important;
+    font-size: 0.78125rem !important;
   }
 
   /* ------------------------------------------------------- mobile request cards */

@@ -50,6 +50,9 @@ export async function generateMetadata({ params }) {
 
   const url = absolute(`/compare/${post.slug}`)
   const description = post.summary || toPlainText(post.content, 200)
+  const imageUrl = fs.existsSync(path.join(process.cwd(), 'public', 'images', `${post.slug}.jpg`))
+    ? absolute(`/images/${post.slug}.jpg`)
+    : absolute(`/compare/${post.slug}/opengraph-image`)
 
   return {
     title: post.title,
@@ -65,8 +68,21 @@ export async function generateMetadata({ params }) {
       publishedTime: isoDate(post.created_at),
       modifiedTime: isoDate(post.updated_at),
       authors: post.author ? [post.author] : undefined,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
-    twitter: { card: 'summary_large_image', title: post.title, description },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description,
+      images: [imageUrl],
+    },
   }
 }
 

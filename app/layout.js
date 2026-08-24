@@ -1,6 +1,6 @@
 import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import { SITE_NAME, SITE_DESCRIPTION, CONTACT_EMAIL, siteUrl } from '../lib/site.js'
+import { SITE_NAME, SITE_DESCRIPTION, CONTACT_EMAIL, siteUrl, absolute } from '../lib/site.js'
 import Header from '../components/Header.js'
 import Motion from '../components/Motion.js'
 import { INDUSTRIES, COMPARISONS } from '../components/nav-data.js'
@@ -24,7 +24,29 @@ export const metadata = {
   metadataBase: new URL(siteUrl()),
   title: { default: `${SITE_NAME} — tool comparisons`, template: `%s — ${SITE_NAME}` },
   description: SITE_DESCRIPTION,
-  openGraph: { siteName: SITE_NAME, type: 'website', locale: 'en_GB' },
+  openGraph: {
+    siteName: SITE_NAME,
+    type: 'website',
+    locale: 'en_GB',
+    title: `${SITE_NAME} — Independent AI & B2B Tool Comparisons`,
+    description: SITE_DESCRIPTION,
+    url: siteUrl(),
+    images: [
+      {
+        url: absolute('/opengraph-image'),
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} — Independent AI & B2B Tool Comparisons`,
+        type: 'image/png',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_NAME} — Independent AI & B2B Tool Comparisons`,
+    description: SITE_DESCRIPTION,
+    images: [absolute('/opengraph-image')],
+  },
   robots: { index: true, follow: true },
 }
 

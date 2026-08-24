@@ -1,5 +1,5 @@
 import RequestForm from './RequestForm.js'
-import { SITE_NAME, absolute } from '../lib/site.js'
+import { SITE_NAME, absolute } from '../../lib/site.js'
 
 // A utility page, not content. Kept out of the index and the sitemap.
 export const metadata = {

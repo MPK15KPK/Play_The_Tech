@@ -43,6 +43,26 @@ async function getRelated(post) {
   }
 }
 
+const KNOWN_IMAGES = new Set([
+  '11x-vs-artisan',
+  'ai-sdr-vs-sales-copilot',
+  'best-ai-sales-agents-2026',
+  'hubspot-vs-salesforce',
+  'microsoft-365-copilot-vs-salesforce-agentforce',
+])
+
+function getPostImage(slug) {
+  if (KNOWN_IMAGES.has(slug)) {
+    return `/images/${slug}.jpg`
+  }
+  try {
+    if (fs.existsSync(path.join(process.cwd(), 'public', 'images', `${slug}.jpg`))) {
+      return `/images/${slug}.jpg`
+    }
+  } catch {}
+  return `/compare/${slug}/opengraph-image`
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const post = await getPost(slug).catch(() => null)
@@ -50,9 +70,7 @@ export async function generateMetadata({ params }) {
 
   const url = absolute(`/compare/${post.slug}`)
   const description = post.summary || toPlainText(post.content, 200)
-  const imageUrl = fs.existsSync(path.join(process.cwd(), 'public', 'images', `${post.slug}.jpg`))
-    ? absolute(`/images/${post.slug}.jpg`)
-    : absolute(`/compare/${post.slug}/opengraph-image`)
+  const imageUrl = absolute(getPostImage(post.slug))
 
   return {
     title: post.title,
@@ -212,10 +230,10 @@ export default async function ComparePage({ params }) {
               </div>
             ) : null}
 
-            {fs.existsSync(path.join(process.cwd(), 'public', 'images', `${post.slug}.jpg`)) ? (
+            {getPostImage(post.slug).startsWith('/images/') ? (
               <figure className="shot featured-shot">
                 <img
-                  src={`/images/${post.slug}.jpg`}
+                  src={getPostImage(post.slug)}
                   alt={`${post.title} interface breakdown`}
                   loading="eager"
                   decoding="async"

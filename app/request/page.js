@@ -1,10 +1,35 @@
 import RequestForm from './RequestForm.js'
+import { SITE_NAME, absolute } from '../lib/site.js'
 
 // A utility page, not content. Kept out of the index and the sitemap.
 export const metadata = {
-  title: 'Request a Custom Comparison',
+  title: 'Request a Custom Comparison — playthetech',
   description: 'Tell us the two AI sales platforms or CRMs you are evaluating. We will build a verified benchmark based on primary vendor data.',
   robots: { index: false, follow: true },
+  alternates: { canonical: absolute('/request') },
+  openGraph: {
+    title: 'Request a Custom Comparison — playthetech',
+    description: 'Tell us the two AI sales platforms or CRMs you are evaluating. We will build a verified benchmark based on primary vendor data.',
+    url: absolute('/request'),
+    type: 'website',
+    siteName: SITE_NAME,
+    locale: 'en_US',
+    images: [
+      {
+        url: absolute('/opengraph-image'),
+        width: 1200,
+        height: 630,
+        alt: 'Request a Custom Comparison — playthetech',
+        type: 'image/png',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Request a Custom Comparison — playthetech',
+    description: 'Tell us the two AI sales platforms or CRMs you are evaluating.',
+    images: [absolute('/opengraph-image')],
+  },
 }
 
 export default function RequestPage() {

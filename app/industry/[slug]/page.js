@@ -12,21 +12,35 @@ export async function generateMetadata({ params }) {
   const ind = getIndustry(slug)
   if (!ind) return { title: 'Industry Not Found' }
 
+  const url = absolute(`/industry/${ind.slug}`)
+  const imageUrl = absolute(`/industry/${ind.slug}/opengraph-image`)
+
   return {
     title: ind.title,
     description: ind.description,
-    alternates: { canonical: `/industry/${ind.slug}` },
+    alternates: { canonical: url },
     openGraph: {
       title: ind.title,
       description: ind.description,
-      url: `/industry/${ind.slug}`,
+      url,
       siteName: SITE_NAME,
       type: 'article',
+      locale: 'en_US',
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: ind.title,
+          type: 'image/png',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: ind.title,
       description: ind.description,
+      images: [imageUrl],
     },
   }
 }

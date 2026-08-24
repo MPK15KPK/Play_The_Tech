@@ -1,4 +1,5 @@
 import { getAllIndustries } from '../../lib/industries.js'
+import { SITE_NAME, absolute } from '../../lib/site.js'
 import {
   FactoryIcon,
   CloudTechIcon,
@@ -9,6 +10,30 @@ import {
 export const metadata = {
   title: 'AI Sales Tools Ranked by Industry (2026)',
   description: 'Explore independent AI sales tool and copilot comparisons tailored to your specific industry sector.',
+  alternates: { canonical: absolute('/industry') },
+  openGraph: {
+    title: 'AI Sales Tools Ranked by Industry (2026) — playthetech',
+    description: 'Explore independent AI sales tool and copilot comparisons tailored to your specific industry sector.',
+    url: absolute('/industry'),
+    type: 'website',
+    siteName: SITE_NAME,
+    locale: 'en_US',
+    images: [
+      {
+        url: absolute('/opengraph-image'),
+        width: 1200,
+        height: 630,
+        alt: 'AI Sales Tools Ranked by Industry (2026)',
+        type: 'image/png',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Sales Tools Ranked by Industry (2026) — playthetech',
+    description: 'Explore independent AI sales tool and copilot comparisons tailored to your specific industry sector.',
+    images: [absolute('/opengraph-image')],
+  },
 }
 
 export default function IndustryIndexPage() {

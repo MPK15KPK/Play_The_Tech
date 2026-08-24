@@ -48,6 +48,9 @@ export const metadata = {
     images: [absolute('/opengraph-image')],
   },
   robots: { index: true, follow: true },
+  verification: {
+    google: 'googlee9488b1530d77b4b',
+  },
 }
 
 export const viewport = {

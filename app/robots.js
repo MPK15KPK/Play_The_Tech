@@ -20,6 +20,6 @@ export default function robots() {
       ...AI_AGENTS.map((userAgent) => ({ userAgent, allow: '/', disallow })),
     ],
     sitemap: [`${base}/sitemap.xml`, `${base}/feed.xml`],
-    host: base,
+    host: new URL(base).host,
   }
 }

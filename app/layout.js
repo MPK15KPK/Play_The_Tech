@@ -171,7 +171,7 @@ export default function RootLayout({ children }) {
         <Header />
 
         {/* Pages supply their own .shell so a band can run full width when one is needed. */}
-        <main id="main" className="page-enter">{children}</main>
+        <main id="main">{children}</main>
 
         <footer className="site-footer">
           <div className="shell footer-grid">

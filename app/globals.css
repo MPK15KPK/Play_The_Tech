@@ -4631,8 +4631,6 @@ body { -webkit-tap-highlight-color: transparent !important; }
    and all of it is switched off for prefers-reduced-motion.
    ========================================================================== */
 
-@keyframes pageIn      { from { opacity: 0; } to { opacity: 1; } }
-@keyframes fadeIn      { from { opacity: 0; } to { opacity: 1; } }
 @keyframes revealUp    { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 @keyframes drawerItemIn{ from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
 @keyframes pulseDotComposited {
@@ -4640,7 +4638,11 @@ body { -webkit-tap-highlight-color: transparent !important; }
   70%, 100% { transform: scale(2.4); opacity: 0; }
 }
 
-#main.page-enter { animation: pageIn var(--dur-3) var(--ease-out) both; }
+/* No entrance fade on <main>. Every navigation here is a full page load, so
+   the 420ms fade only ever delayed first paint — and because Chrome records an
+   element's FIRST paint for LCP, content starting at opacity:0 is excluded
+   from LCP candidacy forever. With the whole page faded, the only candidate
+   left was the 26px header logo, measured at 2.4s. */
 
 /* Visible by default — no invisible content or layout jumping */
 [data-reveal] {

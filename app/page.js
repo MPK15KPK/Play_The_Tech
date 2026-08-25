@@ -299,13 +299,18 @@ export default async function Home() {
                     {p.summary ? <p className="card-summary">{p.summary}</p> : null}
                   </div>
                   <div className="card-media">
-                    <img
-                      className="card-thumb"
-                      src={`/images/${p.slug}.jpg`}
-                      alt={p.title}
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    <picture>
+                      <source srcSet={`/images/thumbs/${p.slug}.webp`} type="image/webp" />
+                      <img
+                        className="card-thumb"
+                        src={`/images/thumbs/${p.slug}.jpg`}
+                        alt={`${p.title} benchmark preview`}
+                        width={150}
+                        height={88}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
                   </div>
                 </li>
               ))}

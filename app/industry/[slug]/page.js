@@ -74,6 +74,16 @@ export default async function IndustryPage({ params }) {
     },
   }
 
+  const crumbs = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: absolute('/') },
+      { '@type': 'ListItem', position: 2, name: 'Industry Guides', item: absolute('/#industries') },
+      { '@type': 'ListItem', position: 3, name: ind.title, item: url },
+    ],
+  }
+
   return (
     <>
       <div className="post-hero">
@@ -311,6 +321,10 @@ export default async function IndustryPage({ params }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(crumbs) }}
       />
     </>
   )

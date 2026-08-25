@@ -17,5 +17,10 @@
     "pg": "^8.23.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
-  }
+  },
+  "browserslist": [
+    "defaults and fully supports es6-module",
+    "> 0.5%",
+    "not dead"
+  ]
 }

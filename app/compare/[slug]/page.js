@@ -11,7 +11,24 @@ import PostActions from '../../../components/PostActions.js'
 // Server component throughout. No 'use client' on this file or anything it
 // renders — most AI crawlers do not execute JavaScript, and the table is the
 // whole point of the page. GUARDRAILS R7.1, R7.2.
-export const dynamic = 'force-dynamic'
+// ISR rather than force-dynamic: see app/page.js. The vote and view counts
+// rendered here are a starting value that PostActions refreshes client-side, so
+// serving them from cache costs nothing.
+export const revalidate = 300
+
+/** Prerender every published comparison at build time; a post published after
+ *  the build is rendered on first visit and then cached the same way. If the
+ *  database is unreachable during a build, an empty list keeps the build green
+ *  and ISR fills the pages in on demand. */
+export async function generateStaticParams() {
+  try {
+    const rows = await query(`SELECT slug FROM ${POSTS} WHERE published = TRUE`)
+    return rows.map((r) => ({ slug: r.slug }))
+  } catch (err) {
+    console.error('generateStaticParams failed:', err.message)
+    return []
+  }
+}
 
 async function getPost(slug) {
   return one(

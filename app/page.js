@@ -4,7 +4,11 @@ import { renderContent, extractFirstTable } from '../lib/markdown.js'
 import { SITE_NAME, SITE_DESCRIPTION, CONTACT_EMAIL, absolute } from '../lib/site.js'
 import { getAllIndustries } from '../lib/industries.js'
 
-export const dynamic = 'force-dynamic'
+// Was force-dynamic, which put an Azure Postgres round trip in front of every
+// byte of HTML — TTFB is charged straight to FCP and LCP. The index only
+// changes when a post is published, and app/api/posts/route.js revalidates this
+// path on save, so the window is a backstop rather than the freshness contract.
+export const revalidate = 300
 
 
 export const metadata = {

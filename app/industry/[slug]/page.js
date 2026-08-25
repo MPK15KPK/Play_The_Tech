@@ -5,7 +5,12 @@ import { longDate } from '../../../lib/format.js'
 import PostActions from '../../../components/PostActions.js'
 
 
-export const dynamic = 'force-dynamic'
+// Every word on this page comes from lib/industries.js, so it prerenders at
+// build time. It was marked force-dynamic, which server-rendered static content
+// on every request for nothing.
+export function generateStaticParams() {
+  return getAllIndustries().map((ind) => ({ slug: ind.slug }))
+}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params

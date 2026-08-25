@@ -44,7 +44,14 @@ const nextConfig = {
 
   experimental: {
     optimizePackageImports: ['marked'],
-    optimizeCss: true,
+    // Deliberately NOT enabling `inlineCss`. Measured on this codebase it
+    // embeds the full stylesheet twice per page (a <style> tag plus a copy in
+    // the RSC payload): the homepage HTML went from 15 KB to 72 KB gzipped,
+    // which costs more on a mobile connection than the one render-blocking
+    // CSS request it removes — the regression reverted in 82aa8cc.
+    //
+    // `optimizeCss` used to sit here and did nothing: it is read only by
+    // build/webpack-config.js, and this project builds with Turbopack.
   },
 
   async headers() {

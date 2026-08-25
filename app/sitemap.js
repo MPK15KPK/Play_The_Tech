@@ -2,7 +2,7 @@ import { query, POSTS } from '../lib/db.js'
 import { siteUrl } from '../lib/site.js'
 import { getAllIndustries } from '../lib/industries.js'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 // Published posts, industry hubs, and the home page. /admin, /api, and /request stay out.
 export default async function sitemap() {

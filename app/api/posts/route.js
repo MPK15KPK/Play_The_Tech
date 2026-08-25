@@ -1,6 +1,23 @@
+import { revalidatePath } from 'next/cache'
 import { query, one, POSTS } from '../../../lib/db.js'
 import { requireSession } from '../../../lib/session.js'
 import { validatePost } from '../../../lib/validate.js'
+
+/**
+ * The public pages are ISR now (app/page.js), so a save has to say so or the
+ * index sits on a stale copy until its window expires. From a route handler
+ * this only marks the paths — the rebuild happens on the next visit.
+ * Slugs are passed in because an edit can rename one, and the page under the
+ * old address has to go too.
+ */
+function publishedPagesChanged(...slugs) {
+  revalidatePath('/')
+  revalidatePath('/sitemap.xml')
+  revalidatePath('/feed.xml')
+  for (const slug of new Set(slugs.filter(Boolean))) {
+    revalidatePath(`/compare/${slug}`)
+  }
+}
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -34,7 +51,9 @@ export async function POST(req) {
 
   try {
     let row
+    let previousSlug = null
     if (editing) {
+      previousSlug = (await one(`SELECT slug FROM ${POSTS} WHERE id = $1`, [id]))?.slug || null
       row = await one(
         `UPDATE ${POSTS}
             SET slug = $1, title = $2, type = $3,
@@ -57,6 +76,7 @@ export async function POST(req) {
         values,
       )
     }
+    publishedPagesChanged(row.slug, previousSlug)
     return Response.json({ ok: true, id: row.id, slug: row.slug })
   } catch (err) {
     if (err.code === '23505') {
@@ -111,6 +131,7 @@ export async function PATCH(req) {
     [body.published, id],
   )
   if (!row) return Response.json({ error: 'Not found.' }, { status: 404 })
+  publishedPagesChanged(row.slug)
   return Response.json({ ok: true, ...row })
 }
 
@@ -141,5 +162,6 @@ export async function DELETE(req) {
 
   await one(`DELETE FROM ${POSTS} WHERE id = $1 RETURNING id`, [id])
   console.log(`post deleted: #${existing.id} ${existing.slug}`)
+  publishedPagesChanged(existing.slug)
   return Response.json({ ok: true, deleted: existing.slug })
 }

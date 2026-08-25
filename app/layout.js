@@ -146,11 +146,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={cls}>
       <head>
+        {/* The masthead mark is the LCP element. Without fetchPriority the
+            preload is queued at Low, behind the font and script requests, and
+            Lighthouse flags it under "LCP request discovery". */}
         <link
           rel="preload"
           href="/logo.webp"
           as="image"
           type="image/webp"
+          fetchPriority="high"
         />
         <script
           type="application/ld+json"

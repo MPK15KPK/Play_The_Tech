@@ -1,7 +1,7 @@
 import { query, POSTS } from '../../lib/db.js'
 import { SITE_NAME, SITE_DESCRIPTION, absolute } from '../../lib/site.js'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 900
 
 function esc(s) {
   return String(s || '')

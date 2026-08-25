@@ -6,10 +6,16 @@ import { INDUSTRIES, COMPARISONS } from '../components/nav-data.js'
 
 // Plus Jakarta Sans: warm, refined, human and legible modern typography.
 // JetBrains Mono: clean, modern monospace for code tokens and technical data.
+// display 'optional', not 'swap': with swap, the webfont's arrival re-paints
+// the text larger than its fallback rendering, and Chrome emits a NEW LCP
+// candidate at swap time — on throttled mobile that measured LCP at 2.5s for
+// text that had been readable since 1.1s. 'optional' keeps the metrics-adjusted
+// fallback when the font is late (no re-paint, LCP = first paint) and applies
+// the real font instantly when cached or preloaded in time.
 const sans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800'],
-  display: 'swap',
+  display: 'optional',
   variable: '--font-sans',
 })
 const mono = JetBrains_Mono({

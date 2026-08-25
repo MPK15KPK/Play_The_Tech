@@ -1,56 +1,42 @@
 /**
- * The playthetech brand mark: A modern geometric tech emblem
- * combining the forward play vector with a benchmark tech pillar.
+ * The PlayTheTech Brand Mark: An authoritative, high-precision tech benchmark masthead.
+ * Combines an obsidian prism emblem, sharp editorial typography, and an independent benchmark kicker.
  */
 
-export function LogoMark({ size = 32 }) {
+export function LogoMark({ size = 38 }) {
   return (
-    <svg
+    <img
+      src="/logo.png"
+      alt="PlayTheTech"
       width={size}
       height={size}
-      viewBox="0 0 100 100"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="logo-mark"
-      aria-hidden="true"
-      focusable="false"
-    >
-      {/* Obsidian geometric ground */}
-      <rect width="100" height="100" rx="22" fill="#0F172A" />
-
-      {/* Tech Benchmark Pillar (P stem / comparison indicator) */}
-      <rect x="22" y="24" width="12" height="52" rx="6" fill="#3B82F6" />
-
-      {/* Forward Play / Tech Vector */}
-      <path
-        d="M40 25.5C40 23.1 42.7 21.6 44.7 22.8L80.7 47.3C82.5 48.5 82.5 51.5 80.7 52.7L44.7 77.2C42.7 78.4 40 76.9 40 74.5V25.5Z"
-        fill="url(#play-tech-grad)"
-      />
-
-      {/* Inner Precision Core */}
-      <path
-        d="M48 37L68 50L48 63V37Z"
-        fill="#FFFFFF"
-      />
-
-      <defs>
-        <linearGradient id="play-tech-grad" x1="40" y1="22" x2="82" y2="78" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#3B82F6" />
-          <stop offset="1" stopColor="#1D4ED8" />
-        </linearGradient>
-      </defs>
-    </svg>
+      className="brand-logo-mark custom-logo-mark"
+      style={{
+        width: `${size}px`,
+        height: `${size}px`,
+        objectFit: 'contain',
+        display: 'block',
+      }}
+    />
   )
 }
 
-export default function Logo({ size = 32 }) {
+export default function Logo() {
   return (
-    <span className="logo">
-      <LogoMark size={size} />
-      <span className="logo-word">
-        <span className="logo-play">play</span>
-        <span className="logo-rest">thetech</span>
-        <span className="logo-dot">.</span>
+    <span className="logo ptt-masthead" aria-label="PlayTheTech — Independent Benchmarks">
+      <LogoMark size={38} />
+      <span className="ptt-title-block">
+        <span className="ptt-brand-name">
+          <span className="ptt-word-play">PLAY</span>
+          <span className="ptt-word-the">THE</span>
+          <span className="ptt-word-tech">TECH</span>
+          <span className="ptt-live-dot" title="Verified Primary Benchmark Index"></span>
+        </span>
+        <span className="ptt-masthead-kicker">
+          <span className="ptt-kicker-rule"></span>
+          <span className="ptt-kicker-label">INDEPENDENT BENCHMARKS</span>
+          <span className="ptt-kicker-rule"></span>
+        </span>
       </span>
     </span>
   )

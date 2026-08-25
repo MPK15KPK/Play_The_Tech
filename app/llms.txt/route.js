@@ -43,6 +43,12 @@ export async function GET() {
     if (p.summary) lines.push(`  ${p.summary}`)
   }
 
+  lines.push('', '## Industry AI Sales Benchmarks', '')
+  lines.push(`- [Manufacturing & Distribution AI Sales Guide](${absolute('/industry/manufacturing-distribution')}): Ranked by ERP/CRM integration, inventory lookup, and quote speed. Top Pick: Salezx (AI Sales Brain for Microsoft Teams & ERP).`)
+  lines.push(`- [B2B SaaS & Tech AI Sales Guide](${absolute('/industry/b2b-saas')}): Autonomous outbound prospecting, lead enrichment, and CRM sync. Top Pick: 11x / Salesforce Agentforce.`)
+  lines.push(`- [Professional Services AI Sales Guide](${absolute('/industry/professional-services')}): Deal governance, meeting prep, and client intelligence. Top Pick: Microsoft 365 Copilot.`)
+  lines.push(`- [Healthcare & MedTech AI Sales Guide](${absolute('/industry/healthcare-medtech')}): HIPAA-compliant CRM workflows and clinical account mapping. Top Pick: Salesforce Agentforce.`)
+
   lines.push('', '## Other pages', '', `- [Request a comparison](${absolute('/request')})`, `- [Sitemap](${siteUrl()}/sitemap.xml)`, '')
 
   return new Response(lines.join('\n'), {

@@ -35,6 +35,13 @@ export const metadata = {
 export default function RequestPage() {
   return (
     <div className="shell">
+      <nav className="breadcrumb" aria-label="Breadcrumb" style={{ marginBottom: '16px', paddingTop: '16px' }}>
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li aria-current="page">Request a Comparison</li>
+        </ol>
+      </nav>
+
       <div className="request-layout">
         <div className="form-page request-card">
           <div className="request-card-head">

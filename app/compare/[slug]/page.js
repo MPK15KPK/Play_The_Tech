@@ -177,7 +177,8 @@ export default async function ComparePage({ params }) {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: absolute('/') },
-      { '@type': 'ListItem', position: 2, name: post.title, item: url },
+      { '@type': 'ListItem', position: 2, name: 'Comparisons', item: absolute('/#comparisons') },
+      { '@type': 'ListItem', position: 3, name: post.title, item: url },
     ],
   }
 

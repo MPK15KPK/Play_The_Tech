@@ -31,8 +31,8 @@ export default async function sitemap() {
     ...posts.map((p) => ({
       url: `${base}/compare/${p.slug}`,
       lastModified: new Date(p.updated_at),
-      changeFrequency: 'monthly',
-      priority: 0.8,
+      changeFrequency: 'weekly',
+      priority: p.slug === 'best-ai-sales-agents-2026' ? 1.0 : 0.85,
     })),
   ]
 }

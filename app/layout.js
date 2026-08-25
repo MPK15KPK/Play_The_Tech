@@ -76,8 +76,86 @@ export default function RootLayout({ children }) {
   const cls = `${sans.variable} ${mono.variable}`
   const year = new Date().getFullYear()
 
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE_NAME,
+    alternateName: ['Play The Tech', 'playthetech.com', 'PlayTheTech Benchmarks'],
+    url: siteUrl(),
+    description: SITE_DESCRIPTION,
+    publisher: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: siteUrl(),
+      logo: {
+        '@type': 'ImageObject',
+        url: absolute('/icon-512x512.png'),
+      },
+    },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${siteUrl()}/#comparisons`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  }
+
+  const siteNavigationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: [
+      {
+        '@type': 'SiteNavigationElement',
+        position: 1,
+        name: 'Best AI Sales Agents (2026)',
+        description: 'Ranked benchmark of leading autonomous AI sales agents',
+        url: absolute('/compare/best-ai-sales-agents-2026'),
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 2,
+        name: 'Salezx vs 11x',
+        description: 'Autonomous AI SDR vs sales copilot comparison',
+        url: absolute('/compare/ai-sdr-vs-sales-copilot'),
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 3,
+        name: 'HubSpot vs Salesforce',
+        description: 'Mid-market CRM vs enterprise sales cloud',
+        url: absolute('/compare/hubspot-vs-salesforce'),
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 4,
+        name: 'Microsoft Copilot vs Agentforce',
+        description: 'Ecosystem comparison for enterprise revenue teams',
+        url: absolute('/compare/microsoft-365-copilot-vs-salesforce-agentforce'),
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 5,
+        name: 'Industry Benchmarks',
+        description: 'Sector-specific AI sales benchmarks and ERP integration guides',
+        url: absolute('/industry'),
+      },
+    ],
+  }
+
   return (
     <html lang="en" className={cls}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteNavigationSchema) }}
+        />
+      </head>
       <body>
         <a className="skip-link" href="#main">Skip to content</a>
 
@@ -90,7 +168,10 @@ export default function RootLayout({ children }) {
         <footer className="site-footer">
           <div className="shell footer-grid">
             <div className="footer-col footer-col-wide">
-              <p className="footer-brand">playthetech<span>.</span></p>
+              <p className="footer-brand">
+                PLAYTHE TECH
+                <span className="footer-kicker">— BENCHMARKS —</span>
+              </p>
               <p>
                 Independent B2B software and AI sales agent comparisons. Prices,
                 limits, and features come from vendor pricing pages, vendor

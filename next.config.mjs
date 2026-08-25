@@ -44,6 +44,7 @@ const nextConfig = {
 
   experimental: {
     optimizePackageImports: ['marked'],
+    optimizeCss: true,
   },
 
   async headers() {

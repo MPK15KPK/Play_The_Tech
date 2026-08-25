@@ -5,26 +5,31 @@
 
 export function LogoMark({ size = 38 }) {
   return (
-    <img
-      src="/logo.png"
-      alt="PlayTheTech"
-      width={size}
-      height={size}
-      className="brand-logo-mark custom-logo-mark"
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        objectFit: 'contain',
-        display: 'block',
-      }}
-    />
+    <picture>
+      <source srcSet="/logo.webp" type="image/webp" />
+      <img
+        src="/logo.png"
+        alt="PlayTheTech"
+        width={size}
+        height={size}
+        decoding="async"
+        fetchPriority="high"
+        className="brand-logo-mark custom-logo-mark"
+        style={{
+          width: `${size}px`,
+          height: `${size}px`,
+          objectFit: 'contain',
+          display: 'block',
+        }}
+      />
+    </picture>
   )
 }
 
-export default function Logo() {
+export default function Logo({ size = 38 } = {}) {
   return (
     <span className="logo ptt-masthead" aria-label="PlayTheTech — Independent Benchmarks">
-      <LogoMark size={38} />
+      <LogoMark size={size} />
       <span className="ptt-title-block">
         <span className="ptt-brand-name">
           <span className="ptt-word-play">PLAY</span>

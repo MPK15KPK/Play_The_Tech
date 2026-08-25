@@ -2,7 +2,6 @@ import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { SITE_NAME, SITE_DESCRIPTION, CONTACT_EMAIL, siteUrl, absolute } from '../lib/site.js'
 import Header from '../components/Header.js'
-import Motion from '../components/Motion.js'
 import { INDUSTRIES, COMPARISONS } from '../components/nav-data.js'
 
 // Plus Jakarta Sans: warm, refined, human and legible modern typography.
@@ -73,7 +72,7 @@ export const viewport = {
 }
 
 export default function RootLayout({ children }) {
-  const cls = `${sans.variable} ${mono.variable}`
+  const cls = `${sans.variable} ${mono.variable} motion-on`
   const year = new Date().getFullYear()
 
   const websiteSchema = {
@@ -160,7 +159,6 @@ export default function RootLayout({ children }) {
         <a className="skip-link" href="#main">Skip to content</a>
 
         <Header />
-        <Motion />
 
         {/* Pages supply their own .shell so a band can run full width when one is needed. */}
         <main id="main" className="page-enter">{children}</main>

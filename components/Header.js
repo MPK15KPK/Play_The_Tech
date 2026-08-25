@@ -1,5 +1,5 @@
 import Logo from './Logo.js'
-import MobileNav from './MobileNav.js'
+import MobileNavLazy from './MobileNavLazy.js'
 import { INDUSTRIES, COMPARISONS } from './nav-data.js'
 
 export default function Header() {
@@ -53,7 +53,7 @@ export default function Header() {
             <Logo size={26} />
           </a>
 
-          <MobileNav />
+          <MobileNavLazy />
         </div>
       </div>
     </header>

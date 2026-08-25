@@ -14,8 +14,8 @@ const sans = Plus_Jakarta_Sans({
 })
 const mono = JetBrains_Mono({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  display: 'swap',
+  weight: ['400'],
+  display: 'optional',
   variable: '--font-mono',
 })
 

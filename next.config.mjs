@@ -38,9 +38,25 @@ const nextConfig = {
     '/compare/[slug]/opengraph-image': ['./assets/fonts/**'],
   },
 
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
+  },
+
   async headers() {
     return [
       { source: '/:path*', headers: securityHeaders },
+      {
+        source: '/images/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        source: '/(logo\\.webp|logo\\.png|icon\\.svg|favicon\\.ico)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
       // Belt and braces: these are also disallowed in robots.txt, but a header
       // survives someone editing robots.js.
       { source: '/admin/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] },

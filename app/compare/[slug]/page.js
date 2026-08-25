@@ -235,12 +235,19 @@ export default async function ComparePage({ params }) {
 
             {getPostImage(post.slug).startsWith('/images/') ? (
               <figure className="shot featured-shot">
-                <img
-                  src={getPostImage(post.slug)}
-                  alt={`${post.title} interface breakdown`}
-                  loading="eager"
-                  decoding="async"
-                />
+                <picture>
+                  <source
+                    srcSet={getPostImage(post.slug).replace(/\.jpg$/, '.webp')}
+                    type="image/webp"
+                  />
+                  <img
+                    src={getPostImage(post.slug)}
+                    alt={`${post.title} interface breakdown`}
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                  />
+                </picture>
                 <figcaption>
                   {post.type === 'roundup'
                     ? `${post.title} — Platform analytics and command matrix`

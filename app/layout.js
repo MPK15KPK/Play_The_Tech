@@ -13,7 +13,11 @@ import { INDUSTRIES, COMPARISONS } from '../components/nav-data.js'
 // fallback when the font is late (no re-paint, LCP = first paint) and applies
 // the real font instantly when cached or preloaded in time.
 const sans = Plus_Jakarta_Sans({
-  subsets: ['latin'],
+  // latin-ext is preloaded too: a single "₹" in a comparison table pulls the
+  // whole 22KB latin-ext subset, and un-preloaded it was discovered only after
+  // the CSS — a three-hop chain (HTML→CSS→font) that Lighthouse's mobile
+  // simulation charged straight to LCP (2.3s for text painted at 0.9s).
+  subsets: ['latin', 'latin-ext'],
   weight: ['400', '500', '600', '700', '800'],
   display: 'optional',
   variable: '--font-sans',
@@ -22,6 +26,10 @@ const mono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400'],
   display: 'optional',
+  // Not preloaded: it only styles table figures and code tokens, and with
+  // display optional the system mono stands in on a cold cache. Keeps the
+  // critical window byte-neutral after adding the latin-ext preload above.
+  preload: false,
   variable: '--font-mono',
 })
 

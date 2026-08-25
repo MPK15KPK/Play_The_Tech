@@ -146,6 +146,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={cls}>
       <head>
+        <link
+          rel="preload"
+          href="/logo.webp"
+          as="image"
+          type="image/webp"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}

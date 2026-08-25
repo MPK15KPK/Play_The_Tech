@@ -45,6 +45,21 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['marked'],
     optimizeCss: true,
+    inlineCss: true,
+    swcEnvOptions: {
+      // Suppress polyfills for features natively supported by our modern
+      // browserslist targets (Chrome 150+, Firefox 153+, Safari 26+).
+      // PageSpeed Insights flags these as "Legacy JavaScript" (14 KiB).
+      exclude: [
+        'es.array.at',
+        'es.array.flat',
+        'es.array.flat-map',
+        'es.object.from-entries',
+        'es.object.has-own',
+        'es.string.trim-start',
+        'es.string.trim-end',
+      ],
+    },
   },
 
   async headers() {

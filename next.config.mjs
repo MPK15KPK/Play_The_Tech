@@ -42,6 +42,10 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
   },
 
+  experimental: {
+    optimizePackageImports: ['marked'],
+  },
+
   async headers() {
     return [
       { source: '/:path*', headers: securityHeaders },

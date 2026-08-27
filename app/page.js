@@ -12,12 +12,14 @@ export const revalidate = 300
 
 
 export const metadata = {
-  title: `${SITE_NAME} — Independent B2B Software & AI Sales Agent Comparisons`,
-  description: `${SITE_DESCRIPTION} Verified pricing, architecture benchmarks, and per-industry evaluations.`,
+  title: {
+    absolute: `${SITE_NAME} — Independent AI & B2B Tool Comparisons`,
+  },
+  description: SITE_DESCRIPTION,
   alternates: { canonical: absolute('/'), types: { 'application/rss+xml': absolute('/feed.xml') } },
   openGraph: {
-    title: `${SITE_NAME} — Independent B2B Software & AI Sales Agent Comparisons`,
-    description: `${SITE_DESCRIPTION} Verified pricing, architecture benchmarks, and per-industry evaluations.`,
+    title: `${SITE_NAME} — Independent AI & B2B Tool Comparisons`,
+    description: SITE_DESCRIPTION,
     url: absolute('/'),
     type: 'website',
     siteName: SITE_NAME,
@@ -34,7 +36,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} — Independent B2B Software & AI Sales Agent Comparisons`,
+    title: `${SITE_NAME} — Independent AI & B2B Tool Comparisons`,
     description: SITE_DESCRIPTION,
     images: [absolute('/opengraph-image')],
   },

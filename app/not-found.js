@@ -1,7 +1,7 @@
 import { HomeIcon, BriefcaseIcon, LightningIcon, ArrowRightIcon } from '../components/Icons.js'
 
 export const metadata = {
-  title: 'Page Not Found (404) — playthetech',
+  title: 'Page Not Found (404)',
   robots: { index: false, follow: false },
 }
 

@@ -3,12 +3,12 @@ import { SITE_NAME, absolute } from '../../lib/site.js'
 
 // A utility page, not content. Kept out of the index and the sitemap.
 export const metadata = {
-  title: 'Request a Custom Comparison — playthetech',
+  title: 'Request a Custom Comparison',
   description: 'Tell us the two AI sales platforms or CRMs you are evaluating. We will build a verified benchmark based on primary vendor data.',
   robots: { index: false, follow: true },
   alternates: { canonical: absolute('/request') },
   openGraph: {
-    title: 'Request a Custom Comparison — playthetech',
+    title: 'Request a Custom Comparison',
     description: 'Tell us the two AI sales platforms or CRMs you are evaluating. We will build a verified benchmark based on primary vendor data.',
     url: absolute('/request'),
     type: 'website',
@@ -26,7 +26,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Request a Custom Comparison — playthetech',
+    title: 'Request a Custom Comparison',
     description: 'Tell us the two AI sales platforms or CRMs you are evaluating.',
     images: [absolute('/opengraph-image')],
   },

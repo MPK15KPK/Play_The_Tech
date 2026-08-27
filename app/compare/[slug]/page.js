@@ -80,22 +80,78 @@ function getPostImage(slug) {
   return `/compare/${slug}/opengraph-image`
 }
 
+export function getPostSeoMetadata(post) {
+  const POST_SEO_OVERRIDES = {
+    'ai-sdr-vs-sales-copilot': {
+      title: 'AI SDR vs Sales Copilot (2026)',
+      description: 'Compare autonomous AI SDRs and sales copilots (11x vs Salezx). Benchmark pipeline generation, ERP data access, and pricing to pick the right fit.',
+    },
+    'best-ai-sales-agents-2026': {
+      title: 'Best AI Sales Agents (2026)',
+      description: 'Rankings of the 8 best AI sales agents and copilots in 2026. Compare Salesforce Agentforce, Microsoft Copilot, Salezx, and 11x on architecture & cost.',
+    },
+    'microsoft-365-copilot-vs-salesforce-agentforce': {
+      title: 'Microsoft Copilot vs Agentforce (2026)',
+      description: 'Compare Microsoft 365 Copilot vs Salesforce Agentforce for sales teams. Benchmark per-user pricing, Data Cloud actions, and ecosystem workflow fit.',
+    },
+    '11x-vs-artisan': {
+      title: '11x vs Artisan: AI SDR Comparison (2026)',
+      description: 'Compare 11x and Artisan AI SDR platforms. Benchmark multichannel outreach, contact data quality, pricing tiers, and pipeline conversion rates.',
+    },
+    'hubspot-vs-salesforce': {
+      title: 'HubSpot vs Salesforce (2026)',
+      description: 'Compare HubSpot vs Salesforce for growing sales teams. Benchmark TCO, onboarding fees, custom objects, and enterprise scalability.',
+    },
+  }
+
+  if (POST_SEO_OVERRIDES[post.slug]) {
+    return POST_SEO_OVERRIDES[post.slug]
+  }
+
+  let title = post.title
+  if (title.length > 45) {
+    if (post.tool_1 && post.tool_2) {
+      title = `${post.tool_1} vs ${post.tool_2} (2026)`
+    } else {
+      title = `${title.slice(0, 42).trim()}...`
+    }
+  }
+
+  let description = post.summary || toPlainText(post.content, 150)
+  if (description.length > 155) {
+    const firstSentence = description.split(/(?<=[.!?])\s+/)[0]
+    if (firstSentence && firstSentence.length >= 100 && firstSentence.length <= 155) {
+      description = firstSentence
+    } else {
+      const truncated = description.slice(0, 150).trim()
+      const lastSpace = truncated.lastIndexOf(' ')
+      description = (lastSpace > 110 ? truncated.slice(0, lastSpace) : truncated) + '...'
+    }
+  }
+
+  return { title, description }
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const post = await getPost(slug).catch(() => null)
   if (!post) return { title: 'Page not found', robots: { index: false, follow: false } }
 
   const url = absolute(`/compare/${post.slug}`)
-  const description = post.summary || toPlainText(post.content, 200)
+  const seo = getPostSeoMetadata(post)
+  const metaTitle = `${seo.title} — ${SITE_NAME}`
+  const description = seo.description
   const imageUrl = absolute(getPostImage(post.slug))
 
   return {
-    title: post.title,
+    title: {
+      absolute: metaTitle,
+    },
     description,
     keywords: [post.tool_1, post.tool_2, `${post.tool_1} vs ${post.tool_2}`, 'pricing', 'comparison'],
     alternates: { canonical: url },
     openGraph: {
-      title: post.title,
+      title: metaTitle,
       description,
       url,
       type: 'article',
@@ -116,7 +172,7 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
+      title: metaTitle,
       description,
       images: [imageUrl],
     },
@@ -160,11 +216,13 @@ export default async function ComparePage({ params }) {
   // named gets listed, which is the same treatment for all of them (R1.3).
   const alsoCited = extractLinks(html, [post.link_1, post.link_2])
 
+  const seo = getPostSeoMetadata(post)
+
   const article = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: post.title,
-    description: post.summary || undefined,
+    description: seo.description,
     author: post.author ? { '@type': 'Organization', name: post.author } : undefined,
     publisher: { '@type': 'Organization', name: SITE_NAME, url: absolute('/') },
     datePublished: isoDate(post.created_at),

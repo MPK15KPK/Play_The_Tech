@@ -45,8 +45,18 @@ export default function PlatformIndexPage() {
     })),
   }
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: absolute('/') },
+      { '@type': 'ListItem', position: 2, name: 'Platform Profiles', item: absolute('/platform') },
+    ],
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <div className="post-header-band">
         <div className="shell">
           <nav className="breadcrumbs" aria-label="Breadcrumbs">

@@ -33,8 +33,21 @@ export const metadata = {
 }
 
 export default function RequestPage() {
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: absolute('/') },
+      { '@type': 'ListItem', position: 2, name: 'Request a Comparison', item: absolute('/request') },
+    ],
+  }
+
   return (
     <div className="shell">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <nav className="breadcrumb" aria-label="Breadcrumb" style={{ marginBottom: '16px', paddingTop: '16px' }}>
         <ol>
           <li><a href="/">Home</a></li>

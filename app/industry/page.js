@@ -39,6 +39,15 @@ export const metadata = {
 export default function IndustryIndexPage() {
   const industries = getAllIndustries()
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: absolute('/') },
+      { '@type': 'ListItem', position: 2, name: 'Industry Benchmarks', item: absolute('/industry') },
+    ],
+  }
+
   const iconComponents = {
     'manufacturing-distribution': FactoryIcon,
     'b2b-saas': CloudTechIcon,
@@ -48,6 +57,10 @@ export default function IndustryIndexPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <div className="post-header-band">
         <div className="shell">
           <nav className="breadcrumbs" aria-label="Breadcrumbs">

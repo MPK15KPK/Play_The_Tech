@@ -123,43 +123,57 @@ export default function RootLayout({ children }) {
         '@type': 'SiteNavigationElement',
         position: 1,
         name: 'Best AI Sales Agents (2026)',
-        description: 'Ranked benchmark of leading autonomous AI sales agents',
+        description: 'Ranked benchmark of leading autonomous AI sales agents and platforms',
         url: absolute('/compare/best-ai-sales-agents-2026'),
       },
       {
         '@type': 'SiteNavigationElement',
         position: 2,
-        name: 'Salezx vs 11x',
-        description: 'Autonomous AI SDR vs sales copilot comparison',
-        url: absolute('/compare/ai-sdr-vs-sales-copilot'),
+        name: 'AI Platforms for Manufacturing',
+        description: 'Manufacturing AI sales platform benchmark across ERP, quoting, and CPQ',
+        url: absolute('/compare/best-ai-sales-platforms-manufacturing-2026'),
       },
       {
         '@type': 'SiteNavigationElement',
         position: 3,
-        name: 'HubSpot vs Salesforce',
-        description: 'Mid-market CRM vs enterprise sales cloud',
-        url: absolute('/compare/hubspot-vs-salesforce'),
+        name: 'Platform Profiles',
+        description: 'Primary vendor documentation profiles for Salezx, Agentforce, Copilot, Joule, ServiceNow & UiPath',
+        url: absolute('/platform'),
       },
       {
         '@type': 'SiteNavigationElement',
         position: 4,
-        name: 'Microsoft Copilot vs Agentforce',
-        description: 'Ecosystem comparison for enterprise revenue teams',
-        url: absolute('/compare/microsoft-365-copilot-vs-salesforce-agentforce'),
-      },
-      {
-        '@type': 'SiteNavigationElement',
-        position: 5,
         name: 'Industry Benchmarks',
         description: 'Sector-specific AI sales benchmarks and ERP integration guides',
         url: absolute('/industry'),
       },
       {
         '@type': 'SiteNavigationElement',
+        position: 5,
+        name: 'Salezx vs 11x',
+        description: 'Autonomous AI SDR vs sales copilot comparison for enterprise revenue teams',
+        url: absolute('/compare/ai-sdr-vs-sales-copilot'),
+      },
+      {
+        '@type': 'SiteNavigationElement',
         position: 6,
+        name: 'Microsoft Copilot vs Agentforce',
+        description: 'Ecosystem comparison for enterprise revenue and workflow automation',
+        url: absolute('/compare/microsoft-365-copilot-vs-salesforce-agentforce'),
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 7,
         name: 'AI Sales FAQ & Answers',
-        description: 'Direct answers to high-intent AI sales, SDR, and industry queries',
+        description: 'Direct answers to high-intent AI sales, SDR, and industry queries (AEO / GEO)',
         url: absolute('/faq'),
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 8,
+        name: 'Request a Comparison',
+        description: 'Request a custom verified vendor benchmark for your tech stack',
+        url: absolute('/request'),
       },
     ],
   }
@@ -177,6 +191,12 @@ export default function RootLayout({ children }) {
           type="image/webp"
           fetchPriority="high"
         />
+        {/* Explicit standard search engine & browser favicon discovery */}
+        <link rel="icon" href="/favicon.ico" sizes="48x48" />
+        <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/icon-192x192.png" type="image/png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+        <link rel="shortcut icon" href="/favicon.ico" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}

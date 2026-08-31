@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { usePathname } from 'next/navigation'
 import Logo from './Logo.js'
 import { ICON_BY_KEY } from './Icons.js'
-import { INDUSTRIES, BROWSE, COMPARISONS } from './nav-data.js'
+import { INDUSTRIES, BROWSE, COMPARISONS, PLATFORMS } from './nav-data.js'
 
 const EXIT_MS = 240
 
@@ -188,12 +188,25 @@ export default function MobileNav() {
                   </section>
 
                   <section className="m-nav-group">
+                    <p className="m-nav-heading">Platform profiles (6)</p>
+                    {PLATFORMS.map((p, i) => (
+                      <DrawerLink
+                        key={p.href}
+                        item={p}
+                        index={i + BROWSE.length + INDUSTRIES.length}
+                        active={isActive(p.href)}
+                        onNavigate={closeDrawer}
+                      />
+                    ))}
+                  </section>
+
+                  <section className="m-nav-group">
                     <p className="m-nav-heading">Head-to-head &amp; rankings</p>
                     {COMPARISONS.map((c, i) => (
                       <DrawerLink
                         key={c.href}
                         item={c}
-                        index={i + BROWSE.length + INDUSTRIES.length}
+                        index={i + BROWSE.length + INDUSTRIES.length + PLATFORMS.length}
                         active={isActive(c.href)}
                         onNavigate={closeDrawer}
                       />

@@ -2,7 +2,7 @@ import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { SITE_NAME, SITE_DESCRIPTION, CONTACT_EMAIL, siteUrl, absolute } from '../lib/site.js'
 import Header from '../components/Header.js'
-import { INDUSTRIES, COMPARISONS } from '../components/nav-data.js'
+import { INDUSTRIES, COMPARISONS, PLATFORMS } from '../components/nav-data.js'
 
 // Plus Jakarta Sans: warm, refined, human and legible modern typography.
 // JetBrains Mono: clean, modern monospace for code tokens and technical data.
@@ -216,6 +216,15 @@ export default function RootLayout({ children }) {
                 <ul>
                   {INDUSTRIES.map((ind) => (
                     <li key={ind.href}><a href={ind.href}>{ind.name}</a></li>
+                  ))}
+                </ul>
+              </nav>
+
+              <nav className="footer-col" aria-label="Platform profiles">
+                <strong>Platform profiles</strong>
+                <ul>
+                  {PLATFORMS.map((p) => (
+                    <li key={p.href}><a href={p.href}>{p.name}</a></li>
                   ))}
                 </ul>
               </nav>

@@ -20,6 +20,7 @@ export default function Header() {
           <nav className="site-nav" aria-label="Main">
             <a href="/">Comparisons</a>
             <a href="/industry">Industries</a>
+            <a href="/platform">Platforms</a>
             <a href="/faq">AI Answers</a>
             <a href="/compare/best-ai-sales-agents-2026">Rankings</a>
             <a className="cta" href="/request">Request comparison</a>

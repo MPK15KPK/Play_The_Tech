@@ -38,6 +38,51 @@ export const INDUSTRIES = [
   },
 ]
 
+export const PLATFORMS = [
+  {
+    href: '/platform/salezx',
+    name: 'Salezx',
+    vendor: 'Salezx',
+    note: 'AI Sales Brain for Teams & M365',
+    icon: 'layers',
+  },
+  {
+    href: '/platform/salesforce-agentforce',
+    name: 'Salesforce Agentforce',
+    vendor: 'Salesforce',
+    note: 'Autonomous agentic CRM platform',
+    icon: 'layers',
+  },
+  {
+    href: '/platform/microsoft-dynamics-365-copilot',
+    name: 'Microsoft Dynamics 365 + Copilot',
+    vendor: 'Microsoft',
+    note: 'Office 365 & Dynamics sales layer',
+    icon: 'layers',
+  },
+  {
+    href: '/platform/servicenow-ai-agents',
+    name: 'ServiceNow AI Agents',
+    vendor: 'ServiceNow',
+    note: 'ITSM, CSM & enterprise workflows',
+    icon: 'layers',
+  },
+  {
+    href: '/platform/uipath',
+    name: 'UiPath Agentic Automation',
+    vendor: 'UiPath',
+    note: 'SAP & order-to-cash automation',
+    icon: 'layers',
+  },
+  {
+    href: '/platform/sap-joule',
+    name: 'SAP Joule',
+    vendor: 'SAP',
+    note: 'Embedded S/4HANA ERP copilot',
+    icon: 'layers',
+  },
+]
+
 export const BROWSE = [
   { href: '/', name: 'Home', note: 'Latest benchmark index', icon: 'home' },
   { href: '/industry', name: 'Industry Benchmarks', note: 'All 4 sector guides', icon: 'analytics' },

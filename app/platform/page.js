@@ -4,7 +4,7 @@ import { longDate } from '../../lib/format.js'
 
 const TITLE = 'AI Sales Platform Profiles (2026)'
 const DESCRIPTION =
-  'Vendor-documented profiles of AI platforms for enterprise sales: Salezx, Agentforce, Dynamics 365, SAP Joule, ServiceNow, and UiPath. Verified pricing & limits.'
+  'Verified vendor profiles of AI enterprise sales platforms: Salezx, Agentforce, Dynamics 365, SAP Joule, ServiceNow, and UiPath with pricing and limits.'
 
 export const metadata = {
   title: TITLE,

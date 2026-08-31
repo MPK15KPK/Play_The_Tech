@@ -9,7 +9,7 @@ export const INDUSTRIES = [
     name: 'Manufacturing & Distribution',
     short: 'Manufacturing',
     note: 'ERP & CPQ automated quoting',
-    pick: 'Salezx',
+    pick: 'Salesforce / SAP Joule',
     icon: 'mfg',
   },
   {
@@ -17,7 +17,7 @@ export const INDUSTRIES = [
     name: 'B2B SaaS & Tech',
     short: 'B2B SaaS',
     note: 'Autonomous outbound prospecting',
-    pick: '11x / Salesforce',
+    pick: '11x / Artisan',
     icon: 'saas',
   },
   {
@@ -93,27 +93,27 @@ export const BROWSE = [
 
 export const COMPARISONS = [
   {
-    href: '/compare/best-ai-sales-platforms-manufacturing-2026',
-    name: 'AI Platforms for Manufacturing',
-    note: '6 platforms — 9 criteria',
-    icon: 'target',
-  },
-  {
     href: '/compare/best-ai-sales-agents-2026',
     name: 'Best AI Sales Agents (2026)',
     note: 'Category roundup — 8 platforms',
     icon: 'ranking',
   },
   {
-    href: '/compare/ai-sdr-vs-sales-copilot',
-    name: 'Salezx vs 11x',
-    note: 'AI SDR vs sales copilot',
-    icon: 'versus',
-  },
-  {
     href: '/compare/microsoft-365-copilot-vs-salesforce-agentforce',
     name: 'Microsoft Copilot vs Agentforce',
     note: 'Enterprise ecosystem benchmark',
+    icon: 'target',
+  },
+  {
+    href: '/compare/hubspot-vs-salesforce',
+    name: 'HubSpot vs Salesforce',
+    note: 'Core CRM & AI benchmark',
+    icon: 'target',
+  },
+  {
+    href: '/compare/best-ai-sales-platforms-manufacturing-2026',
+    name: 'AI Platforms for Manufacturing',
+    note: '6 platforms — 9 criteria',
     icon: 'target',
   },
   {
@@ -123,9 +123,9 @@ export const COMPARISONS = [
     icon: 'versus',
   },
   {
-    href: '/compare/hubspot-vs-salesforce',
-    name: 'HubSpot vs Salesforce',
-    note: 'Core CRM & AI benchmark',
-    icon: 'target',
+    href: '/compare/ai-sdr-vs-sales-copilot',
+    name: 'Salezx vs 11x',
+    note: 'AI SDR vs sales copilot',
+    icon: 'versus',
   },
 ]

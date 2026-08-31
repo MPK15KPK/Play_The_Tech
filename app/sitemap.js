@@ -60,5 +60,11 @@ export default async function sitemap() {
       changeFrequency: 'weekly',
       priority: p.slug === 'best-ai-sales-agents-2026' ? 1.0 : 0.85,
     })),
+    {
+      url: `${base}/request`,
+      lastModified: platformsVerified,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
   ]
 }

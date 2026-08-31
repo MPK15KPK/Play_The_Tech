@@ -38,11 +38,9 @@ export default function Header() {
                 </a>
               ))}
               <span className="hdr-subbar-div" aria-hidden="true" />
-              {COMPARISONS.slice(1).map((c) => (
-                <a key={c.href} href={c.href}>
-                  {c.name}
-                </a>
-              ))}
+              <a href="/compare/microsoft-365-copilot-vs-salesforce-agentforce">Copilot vs Agentforce</a>
+              <a href="/compare/hubspot-vs-salesforce">HubSpot vs Salesforce</a>
+              <a href="/compare/best-ai-sales-platforms-manufacturing-2026">Manufacturing AI</a>
             </div>
           </div>
         </div>

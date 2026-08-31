@@ -90,7 +90,6 @@ export default function PlatformIndexPage() {
               <a key={p.slug} className="industry-hub-card" href={`/platform/${p.slug}`} data-reveal>
                 <div className="industry-card-top">
                   <span className="industry-top-badge">{p.vendor}</span>
-                  {p.ownedByUs ? <span className="pill pill-rose">Shared ownership</span> : null}
                 </div>
                 <h2 className="industry-card-title">{p.name}</h2>
                 <p className="industry-card-desc">{p.oneLine}</p>

@@ -3,7 +3,6 @@ import { getPlatform, getAllPlatforms, CRITERIA, VERIFIED_ON, NOT_PUBLISHED } fr
 import { SITE_NAME, absolute } from '../../../lib/site.js'
 import { longDate } from '../../../lib/format.js'
 import PostActions from '../../../components/PostActions.js'
-import OwnershipDisclosure from '../../../components/OwnershipDisclosure.js'
 
 const BENCHMARK = '/compare/best-ai-sales-platforms-manufacturing-2026'
 
@@ -115,8 +114,6 @@ export default async function PlatformPage({ params }) {
         <div className="post-layout">
           <article className="post post-shell">
             <PostActions slug={`platform-${p.slug}`} title={p.name} url={url} variant="share" />
-
-            {p.ownedByUs ? <OwnershipDisclosure /> : null}
 
             <div className="answer">
               <h2 className="answer-heading">The Short Answer</h2>

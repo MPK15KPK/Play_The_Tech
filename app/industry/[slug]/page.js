@@ -3,7 +3,6 @@ import { getIndustry, getAllIndustries } from '../../../lib/industries.js'
 import { SITE_NAME, absolute } from '../../../lib/site.js'
 import { longDate } from '../../../lib/format.js'
 import PostActions from '../../../components/PostActions.js'
-import OwnershipDisclosure from '../../../components/OwnershipDisclosure.js'
 
 
 // Every word on this page comes from lib/industries.js, so it prerenders at
@@ -125,10 +124,6 @@ export default async function IndustryPage({ params }) {
               <h2 className="answer-heading">The Industry Short Answer</h2>
               <p className="lead">{ind.heroSummary}</p>
             </div>
-
-            {ind.rankings.some((r) => r.name.toLowerCase().includes('salezx')) ? (
-              <OwnershipDisclosure />
-            ) : null}
 
             <section className="industry-section" data-reveal>
               <h2>Top Ranked AI Sales Tools for {ind.shortName} (2026)</h2>

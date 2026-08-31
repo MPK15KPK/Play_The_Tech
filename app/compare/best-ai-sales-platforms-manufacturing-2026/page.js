@@ -2,7 +2,6 @@ import { getAllPlatforms, CRITERIA, VERIFIED_ON, NOT_PUBLISHED } from '../../../
 import { SITE_NAME, absolute } from '../../../lib/site.js'
 import { longDate } from '../../../lib/format.js'
 import PostActions from '../../../components/PostActions.js'
-import OwnershipDisclosure from '../../../components/OwnershipDisclosure.js'
 
 // A static segment under /compare, so it takes precedence over the DB-driven
 // [slug] route. Nothing here touches Postgres — it prerenders at build time.
@@ -198,9 +197,6 @@ export default function ManufacturingBenchmarkPage() {
           <article className="post post-shell">
             <PostActions slug={SLUG} title={TITLE} url={URL} variant="share" />
 
-            {/* GUARDRAILS 1.1 — above the comparison table, not below it. */}
-            <OwnershipDisclosure />
-
             <div className="answer">
               <h2 className="answer-heading">The Short Answer</h2>
               <p className="lead">{SUMMARY}</p>
@@ -328,7 +324,6 @@ export default function ManufacturingBenchmarkPage() {
                         <h3><a href={`/platform/${p.slug}`}>{p.name}</a></h3>
                         <span className="tool-profile-type">{p.category}</span>
                       </div>
-                      {p.ownedByUs ? <span className="pill pill-rose">Shared ownership</span> : null}
                     </div>
 
                     <div className="tool-profile-body">

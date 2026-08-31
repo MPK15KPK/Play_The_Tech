@@ -227,7 +227,7 @@ export default function MobileNav() {
                 </a>
               )}
               <p className="m-drawer-fine">
-                {isAdmin ? 'playthetech Editorial Management' : 'Independent. No sponsored rankings.'}
+                {isAdmin ? 'playthetech Editorial Management' : 'AI Software & Sales Agent Comparisons'}
               </p>
             </div>
           </div>

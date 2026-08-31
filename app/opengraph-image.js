@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'nodejs'
-export const alt = 'playthetech — Independent B2B Software & AI Sales Agent Comparisons'
+export const alt = 'playthetech — AI & B2B Software Comparisons'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -57,7 +57,7 @@ export default async function Image() {
               textTransform: 'uppercase',
             }}
           >
-            Independent Benchmark 2026
+            AI Benchmark 2026
           </div>
         </div>
 

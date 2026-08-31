@@ -53,7 +53,7 @@ export const metadata = {
     siteName: SITE_NAME,
     type: 'website',
     locale: 'en_GB',
-    title: `${SITE_NAME} — Independent AI & B2B Tool Comparisons`,
+    title: `${SITE_NAME} — AI & B2B Software Comparisons`,
     description: SITE_DESCRIPTION,
     url: siteUrl(),
     images: [
@@ -61,14 +61,14 @@ export const metadata = {
         url: absolute('/opengraph-image'),
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} — Independent AI & B2B Tool Comparisons`,
+        alt: `${SITE_NAME} — AI & B2B Software Comparisons`,
         type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} — Independent AI & B2B Tool Comparisons`,
+    title: `${SITE_NAME} — AI & B2B Software Comparisons`,
     description: SITE_DESCRIPTION,
     images: [absolute('/opengraph-image')],
   },
@@ -222,7 +222,7 @@ export default function RootLayout({ children }) {
                 <span className="footer-kicker">— BENCHMARKS —</span>
               </p>
               <p>
-                Independent B2B software and AI sales agent comparisons. Prices,
+                AI software and sales agent comparisons. Prices,
                 limits, and features come from vendor pricing pages, vendor
                 documentation, or the product itself — never from other comparison
                 sites. Where a vendor does not publish a figure, the table says so

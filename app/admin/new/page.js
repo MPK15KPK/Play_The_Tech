@@ -32,7 +32,7 @@ export default async function NewPostPage({ searchParams }) {
         <div className="editor-card-head">
           <h1>{post ? `Edit: ${post.title}` : 'Create New Comparison'}</h1>
           <p className="editor-card-subtitle">
-            Author an independent primary-sourced comparison matrix and editorial guide.
+            Author an AI comparison matrix and editorial guide based on primary vendor data.
           </p>
         </div>
 

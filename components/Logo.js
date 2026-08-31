@@ -28,7 +28,7 @@ export function LogoMark({ size = 38 }) {
 
 export default function Logo({ size = 38 } = {}) {
   return (
-    <span className="logo ptt-masthead" aria-label="PlayTheTech — Independent Benchmarks">
+    <span className="logo ptt-masthead" aria-label="PlayTheTech — AI Benchmarks">
       <LogoMark size={size} />
       <span className="ptt-title-block">
         <span className="ptt-brand-name">
@@ -39,7 +39,7 @@ export default function Logo({ size = 38 } = {}) {
         </span>
         <span className="ptt-masthead-kicker">
           <span className="ptt-kicker-rule"></span>
-          <span className="ptt-kicker-label">INDEPENDENT BENCHMARKS</span>
+          <span className="ptt-kicker-label">AI BENCHMARKS</span>
           <span className="ptt-kicker-rule"></span>
         </span>
       </span>

@@ -9,11 +9,11 @@ import {
 
 export const metadata = {
   title: 'AI Sales Tools Ranked by Industry (2026)',
-  description: 'Explore independent AI sales tool and copilot comparisons tailored to your industry sector. Compare ERP integration and pricing.',
+  description: 'Explore AI sales tool and copilot comparisons tailored to your industry sector. Compare ERP integration and pricing.',
   alternates: { canonical: absolute('/industry') },
   openGraph: {
     title: 'AI Sales Tools Ranked by Industry (2026)',
-    description: 'Explore independent AI sales tool and copilot comparisons tailored to your industry sector. Compare ERP integration and pricing.',
+    description: 'Explore AI sales tool and copilot comparisons tailored to your industry sector. Compare ERP integration and pricing.',
     url: absolute('/industry'),
     type: 'website',
     siteName: SITE_NAME,
@@ -31,7 +31,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'AI Sales Tools Ranked by Industry (2026)',
-    description: 'Explore independent AI sales tool and copilot comparisons tailored to your industry sector.',
+    description: 'Explore AI sales tool and copilot comparisons tailored to your industry sector.',
     images: [absolute('/opengraph-image')],
   },
 }

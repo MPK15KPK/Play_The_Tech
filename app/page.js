@@ -13,12 +13,12 @@ export const revalidate = 300
 
 export const metadata = {
   title: {
-    absolute: `${SITE_NAME} — Independent AI & B2B Tool Comparisons`,
+    absolute: `${SITE_NAME} — AI & B2B Software Comparisons`,
   },
   description: SITE_DESCRIPTION,
   alternates: { canonical: absolute('/'), types: { 'application/rss+xml': absolute('/feed.xml') } },
   openGraph: {
-    title: `${SITE_NAME} — Independent AI & B2B Tool Comparisons`,
+    title: `${SITE_NAME} — AI & B2B Software Comparisons`,
     description: SITE_DESCRIPTION,
     url: absolute('/'),
     type: 'website',
@@ -29,14 +29,14 @@ export const metadata = {
         url: absolute('/opengraph-image'),
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} — Independent AI Sales Agent & B2B Software Comparisons`,
+        alt: `${SITE_NAME} — AI & B2B Software Comparisons`,
         type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} — Independent AI & B2B Tool Comparisons`,
+    title: `${SITE_NAME} — AI & B2B Software Comparisons`,
     description: SITE_DESCRIPTION,
     images: [absolute('/opengraph-image')],
   },
@@ -65,7 +65,7 @@ function Head({ postCount, toolCount, lastUpdated }) {
         <div className="index-head-left">
           <div className="hero-badge">
             <span className="hero-badge-dot"></span>
-            <span>Independent Benchmark 2026</span>
+            <span>AI Benchmark 2026</span>
           </div>
           <h1>Compare B2B Software &amp; AI Agents Before You Commit Budget</h1>
           <p className="lead">
@@ -206,7 +206,7 @@ export default async function Home() {
       name: SITE_NAME,
       url: absolute('/'),
       email: CONTACT_EMAIL,
-      description: 'Publisher of independent software comparisons, sourced from vendor documentation.',
+      description: 'Publisher of AI software and sales agent comparisons, sourced from vendor documentation.',
     },
   }
 

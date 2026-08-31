@@ -13,7 +13,7 @@ export default function Header() {
               <Logo />
             </a>
             <p className="masthead-note">
-              Independent B2B software &amp; AI sales comparisons, benchmarked by industry and verified against vendor documentation.
+              AI software &amp; sales agent comparisons, benchmarked by industry and verified against vendor documentation.
             </p>
           </div>
 

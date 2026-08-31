@@ -89,6 +89,9 @@ export async function GET() {
     lines.push(`- [${ind.name} AI Sales Guide](${absolute(ind.href)}): ${ind.note}. Top Pick: ${ind.pick}.`)
   }
 
+  lines.push('', '## AI Sales FAQ & Direct Answers (AEO / GEO Knowledge Base)', '')
+  lines.push(`- [AI Sales & Industry FAQ (2026)](${absolute('/faq')}): Direct, factual Q&A summaries on Best AI in Sales, Manufacturing ERP integration, AI SDR vs Copilot architecture, and vendor matchups.`)
+
   lines.push('', '## Other pages', '', `- [Request a comparison](${absolute('/request')})`, `- [Sitemap](${siteUrl()}/sitemap.xml)`, '')
 
   return new Response(lines.join('\n'), {

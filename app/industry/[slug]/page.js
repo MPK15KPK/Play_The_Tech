@@ -3,6 +3,7 @@ import { getIndustry, getAllIndustries } from '../../../lib/industries.js'
 import { SITE_NAME, absolute } from '../../../lib/site.js'
 import { longDate } from '../../../lib/format.js'
 import PostActions from '../../../components/PostActions.js'
+import OwnershipDisclosure from '../../../components/OwnershipDisclosure.js'
 
 
 // Every word on this page comes from lib/industries.js, so it prerenders at
@@ -124,6 +125,10 @@ export default async function IndustryPage({ params }) {
               <h2 className="answer-heading">The Industry Short Answer</h2>
               <p className="lead">{ind.heroSummary}</p>
             </div>
+
+            {ind.rankings.some((r) => r.name.toLowerCase().includes('salezx')) ? (
+              <OwnershipDisclosure />
+            ) : null}
 
             <section className="industry-section" data-reveal>
               <h2>Top Ranked AI Sales Tools for {ind.shortName} (2026)</h2>
@@ -259,6 +264,12 @@ export default async function IndustryPage({ params }) {
             <section className="industry-related" data-reveal>
               <h2>Related AI Sales &amp; CRM Comparisons</h2>
               <ul className="related-links-list">
+                <li>
+                  <a href="/compare/best-ai-sales-platforms-manufacturing-2026">
+                    <strong>AI Sales Platforms for Manufacturing &amp; Complex B2B</strong> — 6 platforms across
+                    ERP, quoting, margin and channel
+                  </a>
+                </li>
                 <li>
                   <a href="/compare/best-ai-sales-agents-2026">
                     <strong>Best AI Sales Agents (2026)</strong> — Comprehensive 7-tool category overview

@@ -154,6 +154,13 @@ export default function RootLayout({ children }) {
         description: 'Sector-specific AI sales benchmarks and ERP integration guides',
         url: absolute('/industry'),
       },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 6,
+        name: 'AI Sales FAQ & Answers',
+        description: 'Direct answers to high-intent AI sales, SDR, and industry queries',
+        url: absolute('/faq'),
+      },
     ],
   }
 
@@ -219,6 +226,7 @@ export default function RootLayout({ children }) {
                   {COMPARISONS.map((c) => (
                     <li key={c.href}><a href={c.href}>{c.name}</a></li>
                   ))}
+                  <li><a href="/faq">AI Sales FAQ</a></li>
                   <li><a href="/request">Request a comparison</a></li>
                 </ul>
               </nav>

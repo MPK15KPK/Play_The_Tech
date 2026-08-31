@@ -5,9 +5,9 @@ import { siteUrl } from '../lib/site.js'
 // failure this whole project is most exposed to. LAUNCH-CHECKLIST §1.
 const AI_AGENTS = [
   'GPTBot', 'OAI-SearchBot', 'ChatGPT-User',
-  'ClaudeBot', 'Claude-SearchBot',
+  'ClaudeBot', 'Claude-SearchBot', 'Claude-Web', 'anthropic-ai',
   'PerplexityBot', 'Google-Extended', 'Applebot-Extended', 'CCBot',
-  'Googlebot', 'Bingbot',
+  'Bravebot', 'Googlebot', 'Bingbot',
 ]
 
 export default function robots() {

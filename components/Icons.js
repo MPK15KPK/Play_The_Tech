@@ -111,6 +111,16 @@ export function CloseIcon({ className = '', size = 18 }) {
   )
 }
 
+export function HelpCircleIcon({ className = '', size = 20 }) {
+  return (
+    <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+      <line x1="12" x2="12.01" y1="17" y2="17" />
+    </svg>
+  )
+}
+
 /** Maps the icon key used in nav-data to a component. */
 export const ICON_BY_KEY = {
   mfg: FactoryIcon,
@@ -124,4 +134,5 @@ export const ICON_BY_KEY = {
   home: HomeIcon,
   layers: LayersIcon,
   close: CloseIcon,
+  faq: HelpCircleIcon,
 }

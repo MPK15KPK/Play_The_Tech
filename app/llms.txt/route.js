@@ -1,7 +1,7 @@
 import { query, POSTS } from '../../lib/db.js'
 import { SITE_NAME, SITE_DESCRIPTION, CONTACT_EMAIL, siteUrl, absolute } from '../../lib/site.js'
 import { longDate } from '../../lib/format.js'
-import { COMPARISONS, INDUSTRIES } from '../../components/nav-data.js'
+import { COMPARISONS, INDUSTRIES, PLATFORMS } from '../../components/nav-data.js'
 
 export const revalidate = 3600
 
@@ -87,6 +87,11 @@ export async function GET() {
   lines.push('', '## Industry AI Sales Benchmarks', '')
   for (const ind of INDUSTRIES) {
     lines.push(`- [${ind.name} AI Sales Guide](${absolute(ind.href)}): ${ind.note}. Top Pick: ${ind.pick}.`)
+  }
+
+  lines.push('', '## Platform Profiles (Primary Sourced & Verified)', '')
+  for (const p of PLATFORMS) {
+    lines.push(`- [${p.name} Profile](${absolute(p.href)}): ${p.note}. Vendor: ${p.vendor}.`)
   }
 
   lines.push('', '## AI Sales FAQ & Direct Answers (AEO / GEO Knowledge Base)', '')
